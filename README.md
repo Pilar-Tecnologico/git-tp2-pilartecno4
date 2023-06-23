@@ -7,6 +7,8 @@
 3. Por cada uno de los tickets que se presentan a continuación, realiza las siguientes acciones:
 
     - Crea una nueva rama desde master siguiendo el formato: `feature/<nombre_descriptivo>`
+
+    - Resolver lo solicitado por el ticket.
     
     - Asegúrate de subir la versión de la página (en el bloque meta version del header) usando SemVer. El número de versión dependerá si el ticket es Major, Minor o Patch.
     
