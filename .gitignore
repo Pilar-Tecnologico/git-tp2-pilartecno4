@@ -1,0 +1,32 @@
+# Archivos y carpetas generados por el sistema operativo
+.DS_Store
+Thumbs.db
+
+# Carpeta de dependencias gestionadas por npm
+/node_modules
+
+# Carpeta de dependencias gestionadas por Yarn
+/yarn.lock
+
+# Carpeta de dependencias gestionadas por Bower
+/bower_components
+
+# Carpeta de dependencias gestionadas por Composer
+/vendor
+
+# Archivos de compilación y producción
+/build
+/dist
+
+# Archivos de configuración de entorno
+.env
+
+# Archivos de registro y caché
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Otros archivos y carpetas generados durante el desarrollo
+.idea
+.vscode
