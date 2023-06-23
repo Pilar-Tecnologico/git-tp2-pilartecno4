@@ -12,6 +12,8 @@
     
     - Haz **push** de cada rama "feature" y genera una **Pull Request** (PR) a la rama principal de tu repositorio. Acepta el merge y borra la rama feature en GitHub.
 
+    - Haz un tag en GitHub con la nueva versión desde master.
+
 4. Realiza un **Pull Request** al repositorio original desde la rama master de tu Fork una vez que hayas terminado todos los tickets.
 
 ---
