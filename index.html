@@ -49,16 +49,23 @@
           <tr>
             <th>Videojuego</th>
             <th>Estado</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody id="gameList">
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td>
+              <button class="button is-danger is-small deleteButton">Eliminar</button>
+            </td>
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td>
+              <button class="button is-danger is-small deleteButton">Eliminar</button>
+            </td>
           </tr>
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
@@ -68,55 +75,73 @@
 
   <script>
     var gameNameInput = document.getElementById('gameName');
-  var submitButton = document.getElementById('submitButton');
+    var submitButton = document.getElementById('submitButton');
 
-  gameNameInput.addEventListener('input', function() {
-    if (gameNameInput.value.trim().length > 0) {
-      submitButton.removeAttribute('disabled');
-    } else {
-      submitButton.setAttribute('disabled', 'disabled');
-    }
-  });
+    gameNameInput.addEventListener('input', function() {
+      if (gameNameInput.value.trim().length > 0) {
+        submitButton.removeAttribute('disabled');
+      } else {
+        submitButton.setAttribute('disabled', 'disabled');
+      }
+    });
 
     document.getElementById('gameForm').addEventListener('submit', function(event) {
-      // Prevenir el comportamiento predeterminado del formulario
-      event.preventDefault();
-    
-      // Obtener los valores del formulario
-     var gameNameInput = document.getElementById('gameName');
-     var gameName = gameNameInput.value;
-     var gameStatus = document.getElementById('gameStatus').value;
-     var nameError = document.getElementById('nameError');
+  // Prevenir el comportamiento predeterminado del formulario
+  event.preventDefault();
 
-      if (gameName.trim() === '') {
-      nameError.classList.remove('is-hidden');
-      gameNameInput.classList.add('is-danger');
-      return; // Detener la ejecución si el campo de nombre está vacío
-    }
+  // Obtener los valores del formulario
+  var gameNameInput = document.getElementById('gameName');
+  var gameName = gameNameInput.value;
+  var gameStatus = document.getElementById('gameStatus').value;
+  var nameError = document.getElementById('nameError');
 
-    nameError.classList.add('is-hidden');
-    gameNameInput.classList.remove('is-danger');
+  if (gameName.trim() === '') {
+    nameError.classList.remove('is-hidden');
+    gameNameInput.classList.add('is-danger');
+    return; // Detener la ejecución si el campo de nombre está vacío
+  }
 
-      // Crear una nueva fila y celdas
-      var newRow = document.createElement('tr');
-      var nameCell = document.createElement('td');
-      var statusCell = document.createElement('td');
-    
-      // Asignar los valores del formulario a las celdas
-      nameCell.textContent = gameName;
-      statusCell.textContent = gameStatus;
-    
-      // Añadir las celdas a la nueva fila
-      newRow.appendChild(nameCell);
-      newRow.appendChild(statusCell);
-    
-      // Añadir la nueva fila a la tabla
-      document.getElementById('gameList').appendChild(newRow);
-    
-      gameNameInput.value = '';
-    document.getElementById('gameStatus').value = 'Planeo jugar';
+  nameError.classList.add('is-hidden');
+  gameNameInput.classList.remove('is-danger');
 
-    submitButton.setAttribute('disabled', 'disabled');
+  // Crear una nueva fila y celdas
+  var newRow = document.createElement('tr');
+  var nameCell = document.createElement('td');
+  var statusCell = document.createElement('td');
+  var actionsCell = document.createElement('td'); // Agregado para la columna de acciones
+
+  // Asignar los valores del formulario a las celdas
+  nameCell.textContent = gameName;
+  statusCell.textContent = gameStatus;
+  actionsCell.innerHTML = '<button class="button is-danger is-small deleteButton">Eliminar</button>'; // Agregado para el botón de eliminar
+
+  // Añadir las celdas a la nueva fila
+  newRow.appendChild(nameCell);
+  newRow.appendChild(statusCell);
+  newRow.appendChild(actionsCell); // Agregado para la columna de acciones
+
+  // Añadir la nueva fila a la tabla
+  document.getElementById('gameList').appendChild(newRow);
+
+  gameNameInput.value = '';
+  document.getElementById('gameStatus').value = 'Planeo jugar';
+
+  submitButton.setAttribute('disabled', 'disabled');
+
+  // Obtén todos los botones de eliminar
+  var deleteButtons = document.getElementsByClassName('deleteButton');
+
+  // Recorre todos los botones de eliminar y agrega un evento de clic a cada uno
+  for (var i = 0; i < deleteButtons.length; i++) {
+    deleteButtons[i].addEventListener('click', function(event) {
+      // Obtén la fila que contiene el botón de eliminar
+      var row = this.parentNode.parentNode;
+
+      // Elimina la fila de la tabla
+      row.parentNode.removeChild(row);
     });
+  }
+});
+
     </script>
     
