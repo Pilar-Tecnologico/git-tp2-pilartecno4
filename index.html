@@ -42,6 +42,30 @@
         </div>
       </form>
 
+      <script>
+        document.getElementById('gameForm').addEventListener('submit', function(event) {
+          event.preventDefault();
+      
+          // Obtener el valor del campo de nombre del videojuego
+          var gameNameInput = document.getElementById('gameName');
+          var gameName = gameNameInput.value.trim();
+      
+          // Verificar si el campo de nombre está vacío
+          if (gameName === '') {
+            alert('Por favor, ingrese el nombre del videojuego.');
+            gameNameInput.focus();
+            return;
+          }
+      
+          // Resto del código para crear una nueva fila y agregar el videojuego a la tabla
+          // ...
+      
+          // Limpiar el formulario
+          gameNameInput.value = '';
+          document.getElementById('gameStatus').value = 'Planeo jugar';
+        });
+      </script>
+
       <!-- Tabla para visualizar el backlog de videojuegos -->
       <table class="table is-fullwidth is-striped is-hoverable">
         <thead>
