@@ -17,31 +17,38 @@
     <div class="container">
       <h1 class="title">Backlog de Videojuegos</h1>
 
-      <!-- Formulario para cargar nuevos videojuegos -->
-      <form id="gameForm" class="mb-4">
-        <div class="field">
-          <label class="label">Nombre del Videojuego</label>
-          <div class="control">
-            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego">
-          </div>
-          <p class="help is-danger is-hidden" id="nameError">El nombre del videojuego es obligatorio.</p>
-        </div>
-        <div class="field">
-          <label class="label">Estado</label>
-          <div class="control">
-            <div class="select">
-              <select id="gameStatus">
-                <option>Planeo jugar</option>
-                <option>Jugando</option>
-                <option>Completado</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="control">
-          <button type="submit" class="button is-primary" id="submitButton" disabled>Cargar Videojuego</button>
-        </div>
-      </form>
+<!-- Formulario para cargar nuevos videojuegos -->
+<form id="gameForm" class="mb-4">
+  <div class="field">
+    <label class="label">Nombre del Videojuego</label>
+    <div class="control">
+      <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego">
+    </div>
+    <p class="help is-danger is-hidden" id="nameError">El nombre del videojuego es obligatorio.</p>
+  </div>
+  <div class="field">
+    <label class="label">Estado</label>
+    <div class="control">
+      <div class="select">
+        <select id="gameStatus">
+          <option>Planeo jugar</option>
+          <option>Jugando</option>
+          <option>Completado</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">Valoración (1-5 estrellas)</label>
+    <div class="control">
+      <input class="input" type="number" id="gameRating" min="1" max="5" placeholder="Ingrese valoración del videojuego">
+    </div>
+  </div>
+  <div class="control">
+    <button type="submit" class="button is-primary" id="submitButton" disabled>Cargar Videojuego</button>
+  </div>
+</form>
+
 
       <!-- Tabla para visualizar el backlog de videojuegos -->
       <table class="table is-fullwidth is-striped is-hoverable">
@@ -89,58 +96,60 @@
   // Prevenir el comportamiento predeterminado del formulario
   event.preventDefault();
 
-  // Obtener los valores del formulario
-  var gameNameInput = document.getElementById('gameName');
-  var gameName = gameNameInput.value;
-  var gameStatus = document.getElementById('gameStatus').value;
-  var nameError = document.getElementById('nameError');
+// Obtener los valores del formulario
+var gameNameInput = document.getElementById('gameName');
+var gameName = gameNameInput.value;
+var gameStatus = document.getElementById('gameStatus').value;
+var gameRatingInput = document.getElementById('gameRating');
+var gameRating = parseInt(gameRatingInput.value);
 
-  if (gameName.trim() === '') {
-    nameError.classList.remove('is-hidden');
-    gameNameInput.classList.add('is-danger');
-    return; // Detener la ejecución si el campo de nombre está vacío
-  }
+// Validar la valoración
+if (isNaN(gameRating) || gameRating < 1 || gameRating > 5) {
+  gameRating = 0; // Valor por defecto si la valoración es inválida
+}
 
-  nameError.classList.add('is-hidden');
-  gameNameInput.classList.remove('is-danger');
+// Crear una nueva fila y celdas
+var newRow = document.createElement('tr');
+var nameCell = document.createElement('td');
+var statusCell = document.createElement('td');
+var ratingCell = document.createElement('td'); // Agregado para la columna de valoración
+var actionsCell = document.createElement('td'); // Agregado para la columna de acciones
 
-  // Crear una nueva fila y celdas
-  var newRow = document.createElement('tr');
-  var nameCell = document.createElement('td');
-  var statusCell = document.createElement('td');
-  var actionsCell = document.createElement('td'); // Agregado para la columna de acciones
+// Asignar los valores del formulario a las celdas
+nameCell.textContent = gameName;
+statusCell.textContent = gameStatus;
+ratingCell.textContent = gameRating + ' estrellas'; // Mostrar la valoración en la celda de valoración
+actionsCell.innerHTML = '<button class="button is-danger is-small deleteButton">Eliminar</button>'; // Agregado para el botón de eliminar
 
-  // Asignar los valores del formulario a las celdas
-  nameCell.textContent = gameName;
-  statusCell.textContent = gameStatus;
-  actionsCell.innerHTML = '<button class="button is-danger is-small deleteButton">Eliminar</button>'; // Agregado para el botón de eliminar
+// Añadir las celdas a la nueva fila
+newRow.appendChild(nameCell);
+newRow.appendChild(statusCell);
+newRow.appendChild(ratingCell); // Agregado para la columna de valoración
+newRow.appendChild(actionsCell); // Agregado para la columna de acciones
 
-  // Añadir las celdas a la nueva fila
-  newRow.appendChild(nameCell);
-  newRow.appendChild(statusCell);
-  newRow.appendChild(actionsCell); // Agregado para la columna de acciones
+// Añadir la nueva fila a la tabla
+document.getElementById('gameList').appendChild(newRow);
 
-  // Añadir la nueva fila a la tabla
-  document.getElementById('gameList').appendChild(newRow);
+gameNameInput.value = '';
+document.getElementById('gameStatus').value = 'Planeo jugar';
+gameRatingInput.value = '';
 
-  gameNameInput.value = '';
-  document.getElementById('gameStatus').value = 'Planeo jugar';
+submitButton.setAttribute('disabled', 'disabled');
 
-  submitButton.setAttribute('disabled', 'disabled');
+// Obtén todos los botones de eliminar (incluido el nuevo)
+var deleteButtons = document.getElementsByClassName('deleteButton');
 
-  // Obtén todos los botones de eliminar
-  var deleteButtons = document.getElementsByClassName('deleteButton');
+// Recorre todos los botones de eliminar y agrega un evento de clic a cada uno
+for (var i = 0; i < deleteButtons.length; i++) {
+  deleteButtons[i].addEventListener('click', function(event) {
+    // Obtén la fila que contiene el botón de eliminar
+    var row = this.parentNode.parentNode;
 
-  // Recorre todos los botones de eliminar y agrega un evento de clic a cada uno
-  for (var i = 0; i < deleteButtons.length; i++) {
-    deleteButtons[i].addEventListener('click', function(event) {
-      // Obtén la fila que contiene el botón de eliminar
-      var row = this.parentNode.parentNode;
+    // Elimina la fila de la tabla
+    row.parentNode.removeChild(row);
+  });
+}
 
-      // Elimina la fila de la tabla
-      row.parentNode.removeChild(row);
-    });
-  }
 });
 
     </script>
