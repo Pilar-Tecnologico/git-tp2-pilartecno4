@@ -24,6 +24,7 @@
           <div class="control">
             <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego">
           </div>
+          <p class="help is-danger is-hidden" id="nameError">El nombre del videojuego es obligatorio.</p>
         </div>
         <div class="field">
           <label class="label">Estado</label>
@@ -38,7 +39,7 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button type="submit" class="button is-primary" id="submitButton" disabled>Cargar Videojuego</button>
         </div>
       </form>
 
@@ -66,14 +67,36 @@
   </section>
 
   <script>
+    var gameNameInput = document.getElementById('gameName');
+  var submitButton = document.getElementById('submitButton');
+
+  gameNameInput.addEventListener('input', function() {
+    if (gameNameInput.value.trim().length > 0) {
+      submitButton.removeAttribute('disabled');
+    } else {
+      submitButton.setAttribute('disabled', 'disabled');
+    }
+  });
+
     document.getElementById('gameForm').addEventListener('submit', function(event) {
       // Prevenir el comportamiento predeterminado del formulario
       event.preventDefault();
     
       // Obtener los valores del formulario
-      var gameName = document.getElementById('gameName').value;
-      var gameStatus = document.getElementById('gameStatus').value;
-    
+     var gameNameInput = document.getElementById('gameName');
+     var gameName = gameNameInput.value;
+     var gameStatus = document.getElementById('gameStatus').value;
+     var nameError = document.getElementById('nameError');
+
+      if (gameName.trim() === '') {
+      nameError.classList.remove('is-hidden');
+      gameNameInput.classList.add('is-danger');
+      return; // Detener la ejecución si el campo de nombre está vacío
+    }
+
+    nameError.classList.add('is-hidden');
+    gameNameInput.classList.remove('is-danger');
+
       // Crear una nueva fila y celdas
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
@@ -90,9 +113,10 @@
       // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
     
-      // Limpiar el formulario
-      document.getElementById('gameName').value = '';
-      document.getElementById('gameStatus').value = 'Planeo jugar';
+      gameNameInput.value = '';
+    document.getElementById('gameStatus').value = 'Planeo jugar';
+
+    submitButton.setAttribute('disabled', 'disabled');
     });
     </script>
     
