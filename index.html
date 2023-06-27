@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="version" content="1.1.1" />
+    <meta name="version" content="2.0.0" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css"
@@ -49,6 +49,20 @@
               </div>
             </div>
           </div>
+          <div class="field">
+            <label class="label">Clasificación</label>
+            <div class="control">
+              <input
+                class="input"
+                type="number"
+                id="gameRating"
+                min="1"
+                max="5"
+                placeholder="Ingrese la clasificación (1-5 estrellas)"
+                required
+              />
+            </div>
+          </div>
           <div class="control">
             <button
               type="submit"
@@ -67,6 +81,7 @@
             <tr>
               <th>Videojuego</th>
               <th>Estado</th>
+              <th>Clasificación</th>
               <th>Quitar</th>
             </tr>
           </thead>
@@ -74,6 +89,7 @@
             <tr>
               <td>The Legend of Zelda: Breath of the Wild</td>
               <td>Planeo jugar</td>
+              <td>3</td>
               <td>
                 <button
                   class="button is-danger is-small"
@@ -86,6 +102,7 @@
             <tr>
               <td>Super Mario Odyssey</td>
               <td>Jugando</td>
+              <td>5</td>
               <td>
                 <button
                   class="button is-danger is-small"
@@ -113,12 +130,14 @@
           // Obtener los valores del formulario
           var gameName = document.getElementById("gameName").value;
           var gameStatus = document.getElementById("gameStatus").value;
+          var gameRating = document.getElementById("gameRating").value;
 
           // Crear una nueva fila y celdas
           var newRow = document.createElement("tr");
           var nameCell = document.createElement("td");
           var statusCell = document.createElement("td");
           var actionCell = document.createElement("td");
+          var ratingCell = document.createElement("td");
           var deleteButton = document.createElement("button");
 
           // Configurar el botón de eliminar
@@ -129,10 +148,12 @@
           // Asignar los valores del formulario a las celdas
           nameCell.textContent = gameName;
           statusCell.textContent = gameStatus;
+          ratingCell.textContent = gameRating;
 
           // Añadir las celdas a la nueva fila
           newRow.appendChild(nameCell);
           newRow.appendChild(statusCell);
+          newRow.appendChild(ratingCell);
           actionCell.appendChild(deleteButton);
           newRow.appendChild(actionCell);
 
@@ -142,6 +163,7 @@
           // Limpiar el formulario
           document.getElementById("gameName").value = "";
           document.getElementById("gameStatus").value = "Planeo jugar";
+          document.getElementById("gameRating").value = "";
         });
       // Función para eliminar una entrada de la lista
       function deleteEntry(event) {
