@@ -20,19 +20,19 @@ body {
 }
 
 .secondary {
-  color: #10B981; /* Un verde brillante */
+  color: #10b981; /* Un verde brillante */
 }
 
 .secondary-background {
-  background-color: #10B981;
+  background-color: #10b981;
 }
 
 .tertiary {
-  color: #F59E0B; /* Un amarillo naranja */
+  color: #f59e0b; /* Un amarillo naranja */
 }
 
 .tertiary-background {
-  background-color: #F59E0B;
+  background-color: #f59e0b;
 }
 
 /* Estilos para los elementos de formulario */
@@ -40,7 +40,7 @@ body {
 .input,
 .select select {
   width: 100%;
-  padding: 10px;
+
   border: 1px solid #ddd;
   margin-bottom: 20px;
   box-sizing: border-box;
@@ -49,11 +49,12 @@ body {
 .button {
   display: block;
   width: 100%;
-  padding: 10px;
+
   border: none;
-  background-color: #10B981;
+  background-color: #10b981;
   color: white;
   cursor: pointer;
+  text-align: center;
 }
 
 .button:hover {
@@ -77,7 +78,6 @@ body {
   background-color: #374151;
   color: #f5f5f5;
 }
-
 
 .table tbody tr:nth-child(even) {
   background-color: #f2f2f2;
