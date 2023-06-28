@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.0">
+  <meta name="version" content="1.0.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -38,9 +38,25 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button type="submit" class="button is-primary" id="btnSubmit" disabled>Cargar Videojuego</button>
         </div>
       </form>
+
+      <script>
+        var inputVideoJuego = document.getElementById('gameName');
+        var btnCargarVideojuego = document.getElementById('btnSubmit');
+
+        function verificarCampo(){
+          if (inputVideoJuego.value.trim() != '') {
+            btnCargarVideojuego.disabled = false;
+          } else {
+            btnCargarVideojuego.disabled = true;
+          }
+        }
+
+        inputVideoJuego.addEventListener('input', verificarCampo);
+
+      </script>
 
       <!-- Tabla para visualizar el backlog de videojuegos -->
       <table class="table is-fullwidth is-striped is-hoverable">
