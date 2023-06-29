@@ -99,3 +99,27 @@ body {
 .eliminar{
   margin: 10px 0 0 10px ;
 }
+
+
+.ratingInput {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-right: 80%;
+}
+.ratingInput input{
+  display: none;
+}
+
+.ratingInput label{
+  font-size: 20px;
+  color: #444;
+  padding: 10px;
+  transition: all .2s ease;
+}
+
+ .ratingInput label:hover ~ label::before,
+ .ratingInput label:hover::before,
+ .ratingInput input:checked ~ label::before,
+ .ratingInput label:checked::before{
+  color: #F59E0B;
+ }
