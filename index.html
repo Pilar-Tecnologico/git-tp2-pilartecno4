@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.0">
+  <meta name="version" content="2.1.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -36,9 +36,28 @@
               </select>
             </div>
           </div>
+
+          <label class="label">Rating</label>
+            <div class="ratingInput">
+            
+              <input type="radio" id="rate-5" name="ratingGame" value="5">
+              <label for="rate-5" class="fas fa-star"></label>
+              <input type="radio" id="rate-4" name="ratingGame" value="4">
+              <label for="rate-4" class="fas fa-star"></label>
+              <input type="radio" id="rate-3" name="ratingGame" value="3">
+              <label for="rate-3" class="fas fa-star"></label>
+              <input type="radio" id="rate-2" name="ratingGame" value="2">
+              <label for="rate-2" class="fas fa-star"></label>
+              <input type="radio" id="rate-1" name="ratingGame" value="1">
+              <label for="rate-1" class="fas fa-star"></label>
+                <input type="radio" id="rate-0" name="ratingGame" value="Sin clasificacion" checked>
+                <label for="rate-0" class="fas fa-star" style="display: none;"></label>
+              
+            </div>
+
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button disabled id="gameBtn" type="submit" class="button is-primary" style="background-color: gray;">Cargar Videojuego</button>
         </div>
       </form>
 
@@ -48,16 +67,22 @@
           <tr>
             <th>Videojuego</th>
             <th>Estado</th>
+            <th>Clasificación</th>
+            <th></th>
           </tr>
         </thead>
         <tbody id="gameList">
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td>4</td>
+            <td><button class="eliminar2">X</button></td>
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td>3</td>
+            <td><button class="eliminar2">X</button></td>
           </tr>
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
@@ -65,34 +90,83 @@
     </div>
   </section>
 
+  <script src="https://kit.fontawesome.com/bf969e23bb.js" crossorigin="anonymous"></script>
+
   <script>
     document.getElementById('gameForm').addEventListener('submit', function(event) {
-      // Prevenir el comportamiento predeterminado del formulario
-      event.preventDefault();
-    
-      // Obtener los valores del formulario
-      var gameName = document.getElementById('gameName').value;
-      var gameStatus = document.getElementById('gameStatus').value;
-    
-      // Crear una nueva fila y celdas
-      var newRow = document.createElement('tr');
-      var nameCell = document.createElement('td');
-      var statusCell = document.createElement('td');
-    
-      // Asignar los valores del formulario a las celdas
-      nameCell.textContent = gameName;
-      statusCell.textContent = gameStatus;
-    
-      // Añadir las celdas a la nueva fila
-      newRow.appendChild(nameCell);
-      newRow.appendChild(statusCell);
-    
-      // Añadir la nueva fila a la tabla
-      document.getElementById('gameList').appendChild(newRow);
-    
-      // Limpiar el formulario
-      document.getElementById('gameName').value = '';
-      document.getElementById('gameStatus').value = 'Planeo jugar';
+     // Prevenir el comportamiento predeterminado del formulario
+     event.preventDefault();
+
+// Obtener los valores del formulario
+let gameName = document.getElementById('gameName').value;
+let gameStatus = document.getElementById('gameStatus').value;
+let  ratingGame = document.querySelector('input[name="ratingGame"]:checked').value;
+
+// Crear una nueva fila y celdas
+let newRow = document.createElement('tr');
+let nameCell = document.createElement('td');
+let statusCell = document.createElement('td');
+let ratingCell = document.createElement('td');
+let btnDelete = document.createElement('button')
+btnDelete.className = "eliminar";
+btnDelete.textContent = " X ";
+
+// Asignar los valores del formulario a las celdas
+nameCell.textContent = gameName;
+statusCell.textContent = gameStatus;
+ratingCell.textContent = ratingGame;
+
+// Añadir las celdas a la nueva fila
+newRow.appendChild(nameCell);
+newRow.appendChild(statusCell);
+newRow.appendChild(ratingCell);
+newRow.appendChild(btnDelete);
+
+// Añadir la nueva fila a la tabla
+document.getElementById('gameList').appendChild(newRow);
+
+// Limpiar el formulario
+document.getElementById('gameName').value = '';
+document.getElementById('gameStatus').value = 'Planeo jugar';
+document.getElementById("gameBtn").style.backgroundColor = "grey";
+let limpiezaStar = document.querySelector('input[name="ratingGame"]:checked');
+limpiezaStar.checked = false;
+
+
+      document.querySelectorAll('.eliminar').forEach(btn => {
+        btn.addEventListener('click', () => {
+          btn.parentNode.remove()
+        })
+      })
     });
+
+    document.querySelectorAll('.eliminar2').forEach(btn => {
+        btn.addEventListener('click', () => {
+          btn.parentNode.parentNode.remove()
+        })
+      })
+
+
+    function habilitar() {
+      gameName = document.getElementById("gameName").value;
+    
+      if (gameName == " ") {
+        gameName++
+
+      }
+      else if(gameName == 0) {
+        document.getElementById("gameBtn").disabled = true;
+        document.getElementById("gameBtn").style.backgroundColor = "gray";
+      } else {
+        document.getElementById("gameBtn").disabled = false;
+        document.getElementById("gameBtn").style.backgroundColor = "#10B981";
+      }
+
+    }
+
+    document.getElementById("gameName").addEventListener("keyup", habilitar);
+    document.getElementById("gameBtn").addEventListener("click", habilitar);
+
+    
     </script>
     
