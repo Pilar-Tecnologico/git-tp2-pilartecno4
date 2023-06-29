@@ -48,16 +48,11 @@
           <tr>
             <th>Videojuego</th>
             <th>Estado</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody id="gameList">
           <tr>
-            <td>The Legend of Zelda: Breath of the Wild</td>
-            <td>Planeo jugar</td>
-          </tr>
-          <tr>
-            <td>Super Mario Odyssey</td>
-            <td>Jugando</td>
           </tr>
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
@@ -67,7 +62,7 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function(event) {
-      // Obtengo priemero los elementos del formulario
+      // Obtengo primero los elementos del formulario
       var gameForm = document.getElementById('gameForm');
       var gameNameInput = document.getElementById('gameName');
       var gameStatusInput = document.getElementById('gameStatus');
@@ -85,14 +80,24 @@
         var newRow = document.createElement('tr');
         var nameCell = document.createElement('td');
         var statusCell = document.createElement('td');
+        var actionsCell = document.createElement('td');
+        var deleteButton = document.createElement('button');
     
         // Asignar los valores del formulario a las celdas
         nameCell.textContent = gameName;
         statusCell.textContent = gameStatus;
+        deleteButton.classList.add("delete-button");
     
-        // Añadir las celdas a la nueva fila
+        // Configurar el botón de eliminar
+        deleteButton.addEventListener('click', function() {
+          newRow.remove();
+        });
+    
+        // Añadir las celdas y el botón a la nueva fila
         newRow.appendChild(nameCell);
         newRow.appendChild(statusCell);
+        actionsCell.appendChild(deleteButton);
+        newRow.appendChild(actionsCell);
     
         // Añadir la nueva fila a la tabla
         gameList.appendChild(newRow);
@@ -104,11 +109,11 @@
 
       function checkInput() {
         if (gameNameInput.value.length > 0) {
-      submitButton.removeAttribute("disabled");
+          submitButton.removeAttribute("disabled");
         } else {
           submitButton.setAttribute("disabled", true);
         }
-        console.log("VALUEEE", gameNameInput.value);
+      
       }
 
       // Agregar un event listener al formulario
@@ -116,5 +121,5 @@
 
       gameNameInput.addEventListener("input", checkInput);
     });
-    </script>
+  </script>
     
