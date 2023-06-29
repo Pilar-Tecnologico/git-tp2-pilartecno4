@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button disabled id="gameBtn" type="submit" class="button is-primary" style="background-color: gray;">Cargar Videojuego</button>
         </div>
       </form>
 
@@ -93,6 +93,27 @@
       // Limpiar el formulario
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
+      document.getElementById('gameBtn').style.backgroundColor = 'gray';
     });
+
+    function habilitar() {
+      gameName = document.getElementById("gameName").value;
+    
+      if (gameName == " ") {
+        gameName++
+
+      }
+      else if(gameName == 0) {
+        document.getElementById("gameBtn").disabled = true;
+        document.getElementById("gameBtn").style.backgroundColor = "gray";
+      } else {
+        document.getElementById("gameBtn").disabled = false;
+        document.getElementById("gameBtn").style.backgroundColor = "#10B981";
+      }
+
+    }
+
+    document.getElementById("gameName").addEventListener("keyup", habilitar);
+    document.getElementById("gameBtn").addEventListener("click", habilitar);
     </script>
     
