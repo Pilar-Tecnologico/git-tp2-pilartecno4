@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.0">
+  <meta name="version" content="1.0.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -22,7 +22,7 @@
         <div class="field">
           <label class="label">Nombre del Videojuego</label>
           <div class="control">
-            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego">
+            <input class="input" required type="text" id="gameName" placeholder="Ingrese nombre del videojuego">
           </div>
         </div>
         <div class="field">
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button type="submit" disabled id="submit" class="button is-primary">Cargar Videojuego</button>
         </div>
       </form>
 
@@ -94,5 +94,11 @@
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
     });
+
+    document.getElementById('gameName').addEventListener('input', function(event) {
+      const isSubmitEnabled = (event.target.value.length === 0)
+      document.getElementById('submit').disabled = isSubmitEnabled;
+    })
+
     </script>
     
