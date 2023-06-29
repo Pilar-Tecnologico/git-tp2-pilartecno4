@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.1">
+  <meta name="version" content="1.1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -48,16 +48,23 @@
           <tr>
             <th>Videojuego</th>
             <th>Estado</th>
+            <th>Eliminar</th> <!-- Agrego una nueva columna que almacena el botón eliminar-->
           </tr>
         </thead>
         <tbody id="gameList">
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td>
+              <button class="delete is-medium delete-button" data-row-id="1">X</button> <!-- Agrego el botón eliminar para campo por defecto-->
+            </td>
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td>
+              <button class="delete is-medium delete-button" data-row-id="2">X</button> <!-- Agrego el botón eliminar para campo por defecto-->
+            </td>
           </tr>
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
@@ -79,6 +86,13 @@
 
     inputVideoJuego.addEventListener('input', verificarCampo);
 
+    function eliminarRegistro(event) {
+      var fila = event.target.parentNode.parentNode;
+      var tabla = fila.parentNode;
+
+      tabla.removeChild(fila);
+    }
+
 
     document.getElementById('gameForm').addEventListener('submit', function(event) {
       // Prevenir el comportamiento predeterminado del formulario
@@ -92,14 +106,26 @@
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
+      var eliminarCell = document.createElement('td'); // Nuevo campo para el botón eliminar
     
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
+
+      // Crear boton eliminar
+      var btnEliminar = document.createElement('button');
+      btnEliminar.classList.add('delete', 'is-medium', 'delete-button');
+      btnEliminar.setAttribute('data-row-id', gameName);
+      btnEliminar.textContent = 'X';
+
+      //Evento listener al boton eliminar
+      btnEliminar.addEventListener('click', eliminarRegistro)
     
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
+      eliminarCell.appendChild(btnEliminar);
+      newRow.appendChild(eliminarCell);
     
       // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
