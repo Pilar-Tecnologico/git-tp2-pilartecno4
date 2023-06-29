@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.0">
+  <meta name="version" content="1.0.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button type="submit" class="button is-primary" id="submitButton" disabled>Cargar Videojuego</button>
         </div>
       </form>
 
@@ -66,33 +66,55 @@
   </section>
 
   <script>
-    document.getElementById('gameForm').addEventListener('submit', function(event) {
-      // Prevenir el comportamiento predeterminado del formulario
-      event.preventDefault();
+    document.addEventListener("DOMContentLoaded", function(event) {
+      // Obtengo priemero los elementos del formulario
+      var gameForm = document.getElementById('gameForm');
+      var gameNameInput = document.getElementById('gameName');
+      var gameStatusInput = document.getElementById('gameStatus');
+      var gameList = document.getElementById('gameList');
+
+      // Función para manejar el envío del formulario
+      function handleFormSubmit(event) {
+        event.preventDefault();
     
-      // Obtener los valores del formulario
-      var gameName = document.getElementById('gameName').value;
-      var gameStatus = document.getElementById('gameStatus').value;
+        // Obtener los valores del formulario
+        var gameName = gameNameInput.value;
+        var gameStatus = gameStatusInput.value;
     
-      // Crear una nueva fila y celdas
-      var newRow = document.createElement('tr');
-      var nameCell = document.createElement('td');
-      var statusCell = document.createElement('td');
+        // Crear una nueva fila y celdas
+        var newRow = document.createElement('tr');
+        var nameCell = document.createElement('td');
+        var statusCell = document.createElement('td');
     
-      // Asignar los valores del formulario a las celdas
-      nameCell.textContent = gameName;
-      statusCell.textContent = gameStatus;
+        // Asignar los valores del formulario a las celdas
+        nameCell.textContent = gameName;
+        statusCell.textContent = gameStatus;
     
-      // Añadir las celdas a la nueva fila
-      newRow.appendChild(nameCell);
-      newRow.appendChild(statusCell);
+        // Añadir las celdas a la nueva fila
+        newRow.appendChild(nameCell);
+        newRow.appendChild(statusCell);
     
-      // Añadir la nueva fila a la tabla
-      document.getElementById('gameList').appendChild(newRow);
+        // Añadir la nueva fila a la tabla
+        gameList.appendChild(newRow);
     
-      // Limpiar el formulario
-      document.getElementById('gameName').value = '';
-      document.getElementById('gameStatus').value = 'Planeo jugar';
+        // Limpiar el formulario
+        gameNameInput.value = '';
+        gameStatusInput.value = 'Planeo jugar';
+      }
+
+      function checkInput() {
+        if (gameNameInput.value.length > 0) {
+      submitButton.removeAttribute("disabled");
+        } else {
+          submitButton.setAttribute("disabled", true);
+        }
+        console.log("VALUEEE", gameNameInput.value);
+      }
+
+      // Agregar un event listener al formulario
+      gameForm.addEventListener('submit', handleFormSubmit);
+
+      gameNameInput.addEventListener("input", checkInput);
     });
     </script>
     
