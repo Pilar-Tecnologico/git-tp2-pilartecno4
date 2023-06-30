@@ -1,6 +1,15 @@
 const gameForm = document.getElementById('gameForm');
 const gameName = document.getElementById('gameName');
+const btnCargar = document.getElementById('btnCargar');
 const gameStatus = document.getElementById('gameStatus');
+
+gameName.addEventListener('input', (e) => {
+  if (e.target.value) {
+    btnCargar.removeAttribute('disabled');
+  } else {
+    btnCargar.setAttribute('disabled', 'true');
+  }
+});
 
 gameForm.addEventListener('submit', (e) => {
   e.preventDefault();
