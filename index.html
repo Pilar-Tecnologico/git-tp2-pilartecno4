@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button  id="cargarJuego" type="submit" class="button is-primary" disabled>Cargar Videojuego</button>
         </div>
       </form>
 
@@ -73,6 +73,16 @@
       // Obtener los valores del formulario
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
+      var buttonCargar = document.getElementById('cargarJuego').value;
+
+      gameNameInput.addEventListener('input', function() {
+  
+      if (gameNameInput.value.trim() === '') {
+        buttonCargar.disabled = true; 
+      } else {
+        buttonCargar.disabled = false; 
+      }
+      });
     
       // Crear una nueva fila y celdas
       var newRow = document.createElement('tr');
