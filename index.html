@@ -22,7 +22,7 @@
         <div class="field">
           <label class="label">Nombre del Videojuego</label>
           <div class="control">
-            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego">
+            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego" minlength="1">
           </div>
         </div>
         <div class="field">
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button type="submit" class="button is-primary" id="button">Cargar Videojuego</button>
         </div>
       </form>
 
@@ -66,6 +66,15 @@
   </section>
 
   <script>
+      //validacion de carga
+    let input = document.getElementById('gameName');
+    let button = document.getElementById('button');
+
+    input.addEventListener('input', function() {
+    button.disabled = false;
+    });
+
+
     document.getElementById('gameForm').addEventListener('submit', function(event) {
       // Prevenir el comportamiento predeterminado del formulario
       event.preventDefault();
