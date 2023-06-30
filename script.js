@@ -1,5 +1,6 @@
 const gameForm = document.getElementById('gameForm');
 const gameName = document.getElementById('gameName');
+const gameStatus = document.getElementById('gameStatus');
 
 gameForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -23,6 +24,6 @@ gameForm.addEventListener('submit', (e) => {
   document.getElementById('gameList').appendChild(newRow);
 
   // Limpiar el formulario
-  gameNamevalue = '';
+  gameName.value = '';
   gameStatus.value = 'Planeo jugar';
 });
