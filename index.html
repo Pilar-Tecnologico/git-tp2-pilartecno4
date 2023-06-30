@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.1.0">
+  <meta name="version" content="2.0.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -41,6 +41,20 @@
             </div>
           </div>
         </div>
+        <div class="field">
+          <label class="label">Clasificación</label>
+          <div class="control">
+            <div class="select">
+              <select id="gameRating">
+                <option value="1">1 estrella</option>
+                <option value="2">2 estrellas</option>
+                <option value="3">3 estrellas</option>
+                <option value="4">4 estrellas</option>
+                <option value="5">5 estrellas</option>
+              </select>
+            </div>
+          </div>
+        </div>
         <div class="control">
           <button type="submit" class="button is-primary" id="submitButton" disabled>Cargar Videojuego</button>
         </div>
@@ -52,23 +66,23 @@
           <tr>
             <th>Videojuego</th>
             <th>Estado</th>
-            <th>Acciones</th> <!-- Nueva columna para el botón de eliminar -->
+            <th>Clasificación</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody id="gameList">
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td>5 estrellas</td>
             <td><button class="button is-danger is-small delete-button">X</button></td>
-            <!-- Botón de eliminar -->
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td>4 estrellas</td>
             <td><button class="button is-danger is-small delete-button">X</button></td>
-            <!-- Botón de eliminar -->
           </tr>
-          <!-- Aquí se agregarán más videojuegos -->
         </tbody>
       </table>
     </div>
@@ -82,16 +96,19 @@
       // Obtener los valores del formulario
       const gameName = document.getElementById('gameName').value;
       const gameStatus = document.getElementById('gameStatus').value;
+      const gameRating = document.getElementById('gameRating').value;
 
       // Crear una nueva fila y celdas
       const newRow = document.createElement('tr');
       const nameCell = document.createElement('td');
       const statusCell = document.createElement('td');
+      const ratingCell = document.createElement('td');
       const actionsCell = document.createElement('td');
 
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
+      ratingCell.textContent = gameRating + " estrellas";
 
       // Crear el botón de eliminar y asignarle una clase
       const deleteButton = document.createElement('button');
@@ -106,6 +123,7 @@
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
+      newRow.appendChild(ratingCell);
       actionsCell.appendChild(deleteButton);
 
       // Añadir la nueva fila a la tabla
@@ -115,6 +133,7 @@
       // Limpiar el formulario
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
+      document.getElementById('gameRating').value = '1';
 
       // Deshabilitar el botón después de cargar el juego
       toggleSubmitButton();
