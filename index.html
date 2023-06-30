@@ -4,9 +4,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.1">
+  <meta name="version" content="1.1.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
-  <title>Backlog de Video_Games</title>
+  <title>
+    Backlog de VideoGames
+  </title>
   <style>
     .is-hidden { display: none; }
   </style>
@@ -15,17 +17,12 @@
 <body>
   <section class="section">
     <div class="container">
-      <h1 class="title">
-       ****Backlog de VideoGames****
-      </h1>
-
+      <h1 class="title">***Backlog de VideoGames***</h1>
       <!-- Formulario para cargar nuevos videojuegos -->
       <form id="gameForm" class="mb-4">
         <div class="field">
-          <label class="label">
-            Nombre del Video_Games
-          </label>
-          <div class="control">
+          <label class="label">Nombre del VideoGames</label>
+          <div class="control">      
       <!---Aqui esta el input de ingreso del videogame-->
             <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego" oninput="validateForm()">
           </div>
@@ -44,34 +41,38 @@
           </div>
         </div>
         <div class="control">
-        <!---Aqui vemos el Boton de carga del Video_Juego--->  
           <button type="submit" class="button is-primary" id="loadButton" disabled>Cargar Videojuego</button>
         </div>
       </form>
-
       <!-- Tabla para visualizar el backlog de videojuegos -->
       <table class="table is-fullwidth is-striped is-hoverable">
         <thead>
           <tr>
-            <th>VideojGames</th>
+            <th>Videojuego</th>
             <th>Estados</th>
+            <th>Acciones</th> 
           </tr>
         </thead>
         <tbody id="gameList">
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td>
+              <button class="button is-danger" onclick="deleteGame(this)">x</button>
+            </td>
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td>
+              <button class="button is-danger" onclick="deleteGame(this)">x</button>
+            </td>
           </tr>
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
       </table>
     </div>
   </section>
-
 
   <script>
     function validateForm() {
@@ -86,37 +87,46 @@
     }
 
     document.getElementById('gameForm').addEventListener('submit', function(event) {
-      // Prevenir el comportamiento predeterminado del formulario
+      
       event.preventDefault();
-
-      // Obtener los valores del formulario
+      
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
 
-      // Crear una nueva fila y celdas
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
+      var deleteCell = document.createElement('td'); 
 
-      // Asignar los valores del formulario a las celdas
+      
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
+   
+      var deleteButton = document.createElement('button');
+      deleteButton.classList.add('button', 'is-danger');
+      deleteButton.textContent = 'x';
 
-      // Añadir las celdas a la nueva fila
+   
+      deleteButton.addEventListener('click', function() {
+        var row = this.closest('tr'); 
+        row.remove(); 
+      });
+
+      
+      deleteCell.appendChild(deleteButton);
+    
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
-
-      // Añadir la nueva fila a la tabla
+      newRow.appendChild(deleteCell);
+   
       document.getElementById('gameList').appendChild(newRow);
-
-      // Limpiar el formulario
+ 
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
-
-      // Volver a deshabilitar el botón de carga
+ 
       document.getElementById('loadButton').disabled = true;
     });
   </script>
-    </body>
-    </html>
-    
+</body>
+</html>
+
