@@ -59,3 +59,5 @@
 - Los usuarios pueden asignar una clasificación a cada videojuego.
 - La clasificación se muestra en la tabla.
 
+OD
+
