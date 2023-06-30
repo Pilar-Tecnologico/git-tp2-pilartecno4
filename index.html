@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="Patch" content="1.5.0" />
+    <meta name="Minor" content="2.0.0" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css"
@@ -49,21 +49,41 @@
         </form>
 
         <!-- Tabla para visualizar el backlog de videojuegos -->
-        <table class="table is-fullwidth is-striped is-hoverable">
+           <table class="table is-fullwidth is-striped is-hoverable">
           <thead>
             <tr>
               <th>Videojuego</th>
               <th>Estado</th>
+              <th>Clasificación</th>
+              <th>Quitar</th>
             </tr>
           </thead>
           <tbody id="gameList">
             <tr>
               <td>The Legend of Zelda: Breath of the Wild</td>
               <td>Planeo jugar</td>
+              <td>3</td>
+              <td>
+                <button
+                  class="button is-danger is-small"
+                  onclick="deleteEntry(event)"
+                >
+                  DEL
+                </button>
+              </td>
             </tr>
             <tr>
               <td>Super Mario Odyssey</td>
               <td>Jugando</td>
+              <td>5</td>
+              <td>
+                <button
+                  class="button is-danger is-small"
+                  onclick="deleteEntry(event)"
+                >
+                  DEL
+                </button>
+              </td>
             </tr>
             <!-- Aquí se agregarán más videojuegos -->
           </tbody>
@@ -91,6 +111,11 @@
           var ratingCell = document.createElement("td");
           var deleteButton = document.createElement("button");
 
+          // btn de eliminar
+          deleteButton.classList.add("button", "is-danger", "is-small");
+          deleteButton.textContent = "DEL";
+          deleteButton.onclick = deleteEntry;
+
           // Asignar los valores del formulario a las celdas
           nameCell.textContent = gameName;
           statusCell.textContent = gameStatus;
@@ -113,6 +138,12 @@
         });
 
         function deleteEntry(event) {
+        var row = event.target.parentNode.parentNode;
+        row.remove();
+      }
+
+      // Elimina entrada de la list
+      function deleteEntry(event) {
         var row = event.target.parentNode.parentNode;
         row.remove();
       }
