@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.1">
+  <meta name="version" content="1.1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -52,16 +52,21 @@
           <tr>
             <th>Videojuego</th>
             <th>Estado</th>
+            <th>Acciones</th> <!-- Nueva columna para el botón de eliminar -->
           </tr>
         </thead>
         <tbody id="gameList">
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td><button class="button is-danger is-small delete-button">X</button></td>
+            <!-- Botón de eliminar -->
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td><button class="button is-danger is-small delete-button">X</button></td>
+            <!-- Botón de eliminar -->
           </tr>
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
@@ -82,16 +87,29 @@
       const newRow = document.createElement('tr');
       const nameCell = document.createElement('td');
       const statusCell = document.createElement('td');
+      const actionsCell = document.createElement('td');
 
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
 
+      // Crear el botón de eliminar y asignarle una clase
+      const deleteButton = document.createElement('button');
+      deleteButton.classList.add('button', 'is-danger', 'is-small', 'delete-button');
+      deleteButton.textContent = 'X';
+
+      // Agregar un event listener al botón de eliminar
+      deleteButton.addEventListener('click', function () {
+        newRow.remove(); // Eliminar la fila al hacer clic en el botón
+      });
+
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
+      actionsCell.appendChild(deleteButton);
 
       // Añadir la nueva fila a la tabla
+      newRow.appendChild(actionsCell);
       document.getElementById('gameList').appendChild(newRow);
 
       // Limpiar el formulario
@@ -99,16 +117,29 @@
       document.getElementById('gameStatus').value = 'Planeo jugar';
 
       // Deshabilitar el botón después de cargar el juego
-      toggleSubmitButton(); 
+      toggleSubmitButton();
     });
 
     // Agregar un event listener al campo de nombre para verificar su valor
     document.getElementById('gameName').addEventListener('input', toggleSubmitButton);
     document.getElementById('gameName').addEventListener('keyup', toggleSubmitButton);
 
+    // Agregar event listeners a los botones de eliminar existentes
+    const deleteButtons = document.getElementsByClassName('delete-button');
+    for (let i = 0; i < deleteButtons.length; i++) {
+      deleteButtons[i].addEventListener('click', function () {
+        const row = this.parentNode.parentNode;
+        row.remove(); // Eliminar la fila al hacer clic en el botón
+      });
+    }
+
     // Habilitar botón
     function toggleSubmitButton() {
       const submitButton = document.getElementById('submitButton');
       submitButton.disabled = !document.getElementById('gameName').value;
-    } 
+    }
+
   </script>
+</body>
+
+</html>
