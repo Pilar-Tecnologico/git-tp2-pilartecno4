@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.0">
+  <meta name="version" content="2.0.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -37,8 +37,23 @@
             </div>
           </div>
         </div>
+        <div class="field"> <!-- Se añade un nuevo campo para puntuar el videojuego -->
+          <label class="label">Clasificación</label>
+          <div class="control">
+            <div class="select">
+              <select id="gameRating" disabled>
+                <option value="Sin Clasificacion">Sin Clasificacion</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+          </div>
+        </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button type="submit" class="button is-primary" id="btnSubmit" disabled>Cargar Videojuego</button> <!-- Agrego un identificador al botón y queda deshabilitado por defecto-->
         </div>
       </form>
 
@@ -48,16 +63,26 @@
           <tr>
             <th>Videojuego</th>
             <th>Estado</th>
+            <th>Clasificación</th>
+            <th>Eliminar</th> <!-- Agrego una nueva columna que almacena el botón eliminar-->
           </tr>
         </thead>
         <tbody id="gameList">
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td>Sin Clasificacion</td>
+            <td>
+              <button class="delete is-medium delete-button" data-row-id="1">X</button> <!-- Agrego el botón eliminar para campo por defecto-->
+            </td>
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td>Sin Clasificacion</td>
+            <td>
+              <button class="delete is-medium delete-button" data-row-id="2">X</button> <!-- Agrego el botón eliminar para campo por defecto-->
+            </td>
           </tr>
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
@@ -66,6 +91,40 @@
   </section>
 
   <script>
+    var inputVideoJuego = document.getElementById('gameName');
+    var btnCargarVideojuego = document.getElementById('btnSubmit');
+
+    function verificarCampo(){
+      if (inputVideoJuego.value.trim() != '') {
+        btnCargarVideojuego.disabled = false;
+      } else {
+          btnCargarVideojuego.disabled = true;
+      }
+    }
+
+    inputVideoJuego.addEventListener('input', verificarCampo);
+
+    document.getElementById('gameStatus').addEventListener('change', function() {
+      var gameStatus = this.value;
+      var gameRating = document.getElementById('gameRating');
+
+      if (gameStatus === 'Completado') {
+        gameRating.disabled = false;
+      } else {
+        gameRating.disabled = true;
+        gameRating.value = ''; // Reiniciar el valor del desplegable de clasificación
+      }
+    });
+
+
+    function eliminarRegistro(event) {
+      var fila = event.target.parentNode.parentNode;
+      var tabla = fila.parentNode;
+
+      tabla.removeChild(fila);
+    }
+
+
     document.getElementById('gameForm').addEventListener('submit', function(event) {
       // Prevenir el comportamiento predeterminado del formulario
       event.preventDefault();
@@ -73,19 +132,35 @@
       // Obtener los valores del formulario
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
+      var gameRating = document.getElementById('gameRating').value; //
     
       // Crear una nueva fila y celdas
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
+      var ratingCell = document.createElement('td'); // Nuevo campo para la clasificacion
+      var eliminarCell = document.createElement('td'); // Nuevo campo para el botón eliminar
     
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
+      ratingCell.textContent = gameRating;
+
+      // Crear boton eliminar
+      var btnEliminar = document.createElement('button');
+      btnEliminar.classList.add('delete', 'is-medium', 'delete-button');
+      btnEliminar.setAttribute('data-row-id', gameName);
+      btnEliminar.textContent = 'X';
+
+      //Evento listener al boton eliminar
+      btnEliminar.addEventListener('click', eliminarRegistro)
     
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
+      newRow.appendChild(ratingCell);
+      eliminarCell.appendChild(btnEliminar);
+      newRow.appendChild(eliminarCell);
     
       // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
@@ -93,6 +168,10 @@
       // Limpiar el formulario
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
+      document.getElementById('gameRating').value = 'Sin Clasificacion';
+
+      document.getElementById('btnSubmit').disabled = true; // Volver a deshabilitar el boton una vez que agrego un nuevo juego.
+      document.getElementById('gameRating').disabled = true; // Volver a deshabilitar el desplegable Clasificacion una vez que agrego un nuevo juego.
     });
     </script>
     
