@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.0">
+  <meta name="version" content="1.0.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button type="submit" id="button" class="button is-primary">Cargar Videojuego</button>
         </div>
       </form>
 
@@ -69,30 +69,32 @@
     document.getElementById('gameForm').addEventListener('submit', function(event) {
       // Prevenir el comportamiento predeterminado del formulario
       event.preventDefault();
-    
+
       // Obtener los valores del formulario
-      var gameName = document.getElementById('gameName').value;
-      var gameStatus = document.getElementById('gameStatus').value;
-    
+      const gameName = document.getElementById('gameName').value;
+      const gameStatus = document.getElementById('gameStatus').value;
+
       // Crear una nueva fila y celdas
-      var newRow = document.createElement('tr');
-      var nameCell = document.createElement('td');
-      var statusCell = document.createElement('td');
-    
+      const newRow = document.createElement('tr');
+      const nameCell = document.createElement('td');
+      const statusCell = document.createElement('td');
+
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
-    
+
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
-    
+
       // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
-    
+
       // Limpiar el formulario
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
     });
-    </script>
-    
+  </script>
+  <script src="validar.js"></script>
+</body>
+</html>
