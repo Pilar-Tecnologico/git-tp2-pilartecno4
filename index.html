@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.0">
+  <meta name="version" content="2.1.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -22,7 +22,7 @@
         <div class="field">
           <label class="label">Nombre del Videojuego</label>
           <div class="control">
-            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego">
+            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego" required>
           </div>
         </div>
         <div class="field">
@@ -37,8 +37,22 @@
             </div>
           </div>
         </div>
+        <div class="field"> <!-- Agregamos un nuevo campo para la clasificación -->
+          <label class="label">Clasificación</label>
+          <div class="control">
+            <div class="select">
+              <select id="gameRating">
+                <option>1 estrella</option>
+                <option>2 estrellas</option>
+                <option>3 estrellas</option>
+                <option>4 estrellas</option>
+                <option>5 estrellas</option>
+              </select>
+            </div>
+          </div>
+        </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button type="submit" class="button is-primary" id="submitButton" disabled>Cargar Videojuego</button>
         </div>
       </form>
 
@@ -48,51 +62,95 @@
           <tr>
             <th>Videojuego</th>
             <th>Estado</th>
+            <th>Clasificación</th> <!-- Nueva columna para la clasificación -->
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody id="gameList">
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td>5 estrellas</td>
+            <td>
+              <button class="button is-danger is-small" onclick="deleteGame(this)">Eliminar</button>
+            </td>
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td>4 estrellas</td>
+            <td>
+              <button class="button is-danger is-small" onclick="deleteGame(this)">Eliminar</button>
+            </td>
           </tr>
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
       </table>
     </div>
   </section>
+<script>
+  // Obtener los elementos del formulario
+  var gameNameInput = document.getElementById('gameName');
+  var submitButton = document.getElementById('submitButton');
+  var gameList = document.getElementById('gameList');
 
-  <script>
-    document.getElementById('gameForm').addEventListener('submit', function(event) {
-      // Prevenir el comportamiento predeterminado del formulario
-      event.preventDefault();
-    
-      // Obtener los valores del formulario
-      var gameName = document.getElementById('gameName').value;
-      var gameStatus = document.getElementById('gameStatus').value;
-    
-      // Crear una nueva fila y celdas
-      var newRow = document.createElement('tr');
-      var nameCell = document.createElement('td');
-      var statusCell = document.createElement('td');
-    
-      // Asignar los valores del formulario a las celdas
-      nameCell.textContent = gameName;
-      statusCell.textContent = gameStatus;
-    
-      // Añadir las celdas a la nueva fila
-      newRow.appendChild(nameCell);
-      newRow.appendChild(statusCell);
-    
-      // Añadir la nueva fila a la tabla
-      document.getElementById('gameList').appendChild(newRow);
-    
-      // Limpiar el formulario
-      document.getElementById('gameName').value = '';
-      document.getElementById('gameStatus').value = 'Planeo jugar';
-    });
-    </script>
-    
+  // Agregar un evento input al campo de nombre
+  gameNameInput.addEventListener('input', function() {
+    // Habilitar o inhabilitar el botón de carga según el contenido del campo de nombre
+    submitButton.disabled = gameNameInput.value.length === 0;
+  });
+
+  // Función para eliminar una entrada de la lista
+  function deleteGame(button) {
+    var row = button.parentNode.parentNode; // Obtener la fila (tr) que contiene el botón
+    row.parentNode.removeChild(row); // Eliminar la fila de la tabla
+  }
+
+  document.getElementById('gameForm').addEventListener('submit', function(event) {
+    // Prevenir el comportamiento predeterminado del formulario
+    event.preventDefault();
+
+    // Obtener los valores del formulario
+    var gameName = gameNameInput.value;
+    var gameStatus = document.getElementById('gameStatus').value;
+    var gameRating = document.getElementById('gameRating').value;
+
+    // Crear una nueva fila y celdas
+    var newRow = document.createElement('tr');
+    var nameCell = document.createElement('td');
+    var statusCell = document.createElement('td');
+    var ratingCell = document.createElement('td'); // Agregamos una nueva celda para la clasificación
+    var actionsCell = document.createElement('td');
+    var deleteButton = document.createElement('button');
+
+    // Configurar el botón de eliminar
+    deleteButton.className = 'button is-danger is-small';
+    deleteButton.textContent = 'Eliminar';
+    deleteButton.onclick = function() { deleteGame(this); };
+
+    // Asignar los valores del formulario a las celdas
+    nameCell.textContent = gameName;
+    statusCell.textContent = gameStatus;
+    ratingCell.textContent = gameRating; // Mostrar la clasificación ingresada
+
+    // Añadir las celdas a la nueva fila
+    newRow.appendChild(nameCell);
+    newRow.appendChild(statusCell);
+    newRow.appendChild(ratingCell); // Agregar la celda de clasificación a la nueva fila
+    actionsCell.appendChild(deleteButton);
+    newRow.appendChild(actionsCell);
+
+    // Añadir la nueva fila a la tabla
+    gameList.appendChild(newRow);
+
+    // Limpiar el formulario
+    gameNameInput.value = '';
+    document.getElementById('gameStatus').value = 'Planeo jugar';
+    document.getElementById('gameRating').value = '1 estrella'; // Restablecer la clasificación a 1 estrella
+
+    // Inhabilitar el botón de carga después de enviar el formulario
+    submitButton.disabled = true;
+  });
+</script>
+</body>
+</html>
