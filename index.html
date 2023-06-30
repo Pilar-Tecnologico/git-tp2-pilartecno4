@@ -27,7 +27,7 @@
           </label>
           <div class="control">
       <!---Aqui esta el input de ingreso del videogame-->
-            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego"oninput="validateForm()">
+            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego" oninput="validateForm()">
           </div>
         </div>
         <div class="field">
@@ -72,6 +72,7 @@
     </div>
   </section>
 
+
   <script>
     function validateForm() {
       var gameNameInput = document.getElementById('gameName');
@@ -83,37 +84,39 @@
         loadButton.disabled = false;
       }
     }
+
     document.getElementById('gameForm').addEventListener('submit', function(event) {
       // Prevenir el comportamiento predeterminado del formulario
       event.preventDefault();
-    
+
       // Obtener los valores del formulario
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
-    
+
       // Crear una nueva fila y celdas
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
-    
+
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
-    
+
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
-    
+
       // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
-    
+
       // Limpiar el formulario
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
-      
-      // Volver a deshabilitar el botón de carga
-      document.getElementById('loadButton').disable = true;
 
+      // Volver a deshabilitar el botón de carga
+      document.getElementById('loadButton').disabled = true;
     });
-    </script>
+  </script>
+    </body>
+    </html>
     
