@@ -87,14 +87,26 @@
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
+      let actionsCell = document.createElement('td');
     
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
+      // Crear el botón de eliminar
+    let deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Eliminar';
+      deleteButton.classList.add('eliminar');
+      deleteButton.addEventListener('click', function() {
+      eliminarFila(this); // Llamar a la función eliminarFila con el botón actual como argumento
+    });
+      // Agregar el botón de eliminar a la celda de acciones
+      actionsCell.appendChild(deleteButton);
     
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
+      newRow.appendChild(actionsCell); // Agregar la celda de acciones a la fila
+
     
       // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
@@ -103,5 +115,9 @@
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
     });
+    function eliminarFila(boton) {
+    let fila = boton.parentNode.parentNode;
+    fila.parentNode.removeChild(fila);
+  }
     </script>
     
