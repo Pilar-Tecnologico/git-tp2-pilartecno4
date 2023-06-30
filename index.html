@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.1.1">
+  <meta name="version" content="2.1.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -52,6 +52,7 @@
           <tr>
             <th>Videojuego</th>
             <th>Estado</th>
+            <th>Clasificación</th> <!-- Agregar una nueva columna para la clasificación -->
             <th>Acciones</th> <!-- Agregar una nueva columna para las acciones -->
           </tr>
         </thead>
@@ -59,6 +60,20 @@
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td>
+              <div class="rating">
+                <input type="radio" id="star5" name="rating1" value="5" onclick="setRating(this)" />
+                <label for="star5" class="star"></label>
+                <input type="radio" id="star4" name="rating1" value="4" onclick="setRating(this)" />
+                <label for="star4" class="star"></label>
+                <input type="radio" id="star3" name="rating1" value="3" onclick="setRating(this)" />
+                <label for="star3" class="star"></label>
+                <input type="radio" id="star2" name="rating1" value="2" onclick="setRating(this)" />
+                <label for="star2" class="star"></label>
+                <input type="radio" id="star1" name="rating1" value="1" onclick="setRating(this)" />
+                <label for="star1" class="star"></label>
+              </div>
+            </td>
             <td> <!-- Agregar un botón de eliminar a cada fila -->
               <button class="button is-danger is-small" onclick="deleteGame(this)">
                 <span class="icon">
@@ -70,6 +85,20 @@
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td>
+              <div class="rating">
+                <input type="radio" id="star5" name="rating2" value="5" onclick="setRating(this)" />
+                <label for="star5" class="star"></label>
+                <input type="radio" id="star4" name="rating2" value="4" onclick="setRating(this)" />
+                <label for="star4" class="star"></label>
+                <input type="radio" id="star3" name="rating2" value="3" onclick="setRating(this)" />
+                <label for="star3" class="star"></label>
+                <input type="radio" id="star2" name="rating2" value="2" onclick="setRating(this)" />
+                <label for="star2" class="star"></label>
+                <input type="radio" id="star1" name="rating2" value="1" onclick="setRating(this)" />
+                <label for="star1" class="star"></label>
+              </div>
+            </td>
             <td>
               <button class="button is-danger is-small" onclick="deleteGame(this)">
                 <span class="icon">
@@ -85,6 +114,12 @@
   </section>
 
   <script>
+    function setRating(radio) {
+      var row = radio.parentNode.parentNode.parentNode; // Obtener la fila actual
+      var ratingCell = row.querySelector('.rating-value'); // Obtener la celda de clasificación
+
+      ratingCell.textContent = radio.value; // Establecer la clasificación en la celda correspondiente
+    }
 
     function deleteGame(button) {
       var row = button.parentNode.parentNode; // Obtener la fila actual
