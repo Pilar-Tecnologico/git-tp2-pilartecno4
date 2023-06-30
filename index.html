@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.0">
+  <meta name="version" content="1.0.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button id="cargarJuego" type="submit" class="button is-primary">Cargar Videojuego</button>
         </div>
       </form>
 
@@ -66,6 +66,27 @@
   </section>
 
   <script>
+    const myInput = document.getElementById("gameName");
+    const myButton = document.getElementById("cargarJuego");
+
+    window.addEventListener("load", function() {
+      if (myInput.value === "") {
+        myButton.disabled = true;
+      } else {
+        myButton.disabled = false;
+      }
+    });
+
+myInput.addEventListener("input", function() {
+  if (myInput.value === "") {
+    myButton.disabled = true;
+  } else {
+    myButton.disabled = false;
+  }
+});
+
+
+
     document.getElementById('gameForm').addEventListener('submit', function(event) {
       // Prevenir el comportamiento predeterminado del formulario
       event.preventDefault();
@@ -92,6 +113,7 @@
     
       // Limpiar el formulario
       document.getElementById('gameName').value = '';
+      myButton.disabled = true
       document.getElementById('gameStatus').value = 'Planeo jugar';
     });
     </script>
