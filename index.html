@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.0">
+  <meta name="version" content="2.0.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -37,8 +37,22 @@
             </div>
           </div>
         </div>
+        <div class="field">
+          <label class="label">Estrellas</label>
+          <div class="control">
+            <div class="select">
+              <select id="gameScore">
+                <option>1ඞ</option>
+                <option>2ඞ</option>
+                <option>3ඞ</option>
+                <option>4ඞ</option>
+                <option>5ඞ</option>
+              </select>
+            </div>
+          </div>
+        </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button id="cargarJuego" type="submit" class="button is-primary">Cargar Videojuego</button>
         </div>
       </form>
 
@@ -48,16 +62,22 @@
           <tr>
             <th>Videojuego</th>
             <th>Estado</th>
+            <th>Estrellas</th>
+            <th>Eliminar</th>
           </tr>
         </thead>
         <tbody id="gameList">
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td>5ඞ</td>
+            <td><button class='delete' onclick="eliminarFila(this)">X</button></td>
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td>4ඞ</td>
+            <td><button class='delete' onclick="eliminarFila(this)">X</button></td>
           </tr>
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
@@ -66,6 +86,32 @@
   </section>
 
   <script>
+// tiket 1
+    const myInput = document.getElementById("gameName");
+    const myButton = document.getElementById("cargarJuego");
+
+    window.addEventListener("load", function() {
+      if (myInput.value === "") {
+        myButton.disabled = true;
+      } else {
+        myButton.disabled = false;
+      }
+    });
+myInput.addEventListener("input", function() {
+  if (myInput.value === "") {
+    myButton.disabled = true;
+  } else {
+    myButton.disabled = false;
+  }
+});
+
+//ticket 2
+function eliminarFila(boton) {
+  var fila = boton.parentNode.parentNode;
+  fila.parentNode.removeChild(fila);
+}
+
+
     document.getElementById('gameForm').addEventListener('submit', function(event) {
       // Prevenir el comportamiento predeterminado del formulario
       event.preventDefault();
@@ -73,26 +119,34 @@
       // Obtener los valores del formulario
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
-    
+      var gameScore = document.getElementById("gameScore").value
       // Crear una nueva fila y celdas
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
+      var scoreCell = document.createElement("td");
+      var deleteCell = document.createElement("td");
     
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
+      scoreCell.textContent = gameScore;
+      deleteCell.innerHTML= "<button class='delete' onClick='eliminarFila(this)'>x</button>"
     
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
+      newRow.appendChild(scoreCell);
+      newRow.appendChild(deleteCell);
     
       // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
-    
+      
       // Limpiar el formulario
       document.getElementById('gameName').value = '';
+      myButton.disabled = true
       document.getElementById('gameStatus').value = 'Planeo jugar';
+      document.getElementById("gameScore").value="1ඞ"
     });
     </script>
     
