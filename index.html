@@ -6,6 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="version" content="1.0.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
   <title>Backlog de Videojuegos</title>
   <style>
     .is-hidden { display: none; }
@@ -48,16 +50,31 @@
           <tr>
             <th>Videojuego</th>
             <th>Estado</th>
+            <th>Acciones</th> <!-- Agregamos una columna para las acciones -->
           </tr>
         </thead>
         <tbody id="gameList">
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td>
+              <button class="button is-danger is-small deleteButton">
+                <span class="icon">
+                  <i class="fas fa-times"></i> <!-- Agregamos un ícono de X -->
+                </span>
+              </button>
+            </td>
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td>
+              <button class="button is-danger is-small deleteButton">
+                <span class="icon">
+                  <i class="fas fa-times"></i>
+                </span>
+              </button>
+            </td>
           </tr>
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
@@ -66,33 +83,70 @@
   </section>
 
   <script>
-    document.getElementById('gameForm').addEventListener('submit', function(event) {
-      // Prevenir el comportamiento predeterminado del formulario
+    // Función para eliminar una fila
+    function deleteRow(row) {
+      row.parentNode.removeChild(row);
+    }
+
+    // Función para agregar el evento de clic al botón de eliminar
+    function addDeleteButtonEvent(button) {
+      button.addEventListener('click', function() {
+        var row = this.parentNode.parentNode;
+        deleteRow(row);
+      });
+    }
+
+    // Función para crear un botón de eliminar
+    function createDeleteButton() {
+      var button = document.createElement('button');
+      button.classList.add('button', 'is-danger', 'is-small', 'deleteButton');
+      var icon = document.createElement('span');
+      icon.classList.add('icon');
+      var iconInner = document.createElement('i');
+      iconInner.classList.add('fas', 'fa-times');
+      icon.appendChild(iconInner);
+      button.appendChild(icon);
+      return button;
+    }
+
+    // Obtener referencia al formulario y la lista de juegos
+    var gameForm = document.getElementById('gameForm');
+    var gameList = document.getElementById('gameList');
+
+    // Agregar evento de envío del formulario
+    gameForm.addEventListener('submit', function(event) {
       event.preventDefault();
-    
-      // Obtener los valores del formulario
+
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
-    
-      // Crear una nueva fila y celdas
+
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
-    
-      // Asignar los valores del formulario a las celdas
+      var actionsCell = document.createElement('td');
+
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
-    
-      // Añadir las celdas a la nueva fila
+
+      var deleteButton = createDeleteButton();
+      actionsCell.appendChild(deleteButton);
+      addDeleteButtonEvent(deleteButton);
+
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
-    
-      // Añadir la nueva fila a la tabla
-      document.getElementById('gameList').appendChild(newRow);
-    
-      // Limpiar el formulario
+      newRow.appendChild(actionsCell);
+
+      gameList.appendChild(newRow);
+
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
     });
-    </script>
-    
+
+    // Obtener referencia a todos los botones de eliminar existentes
+    var deleteButtons = document.querySelectorAll('.deleteButton');
+    deleteButtons.forEach(function(button) {
+      addDeleteButtonEvent(button);
+    });
+  </script>
+</body>
+</html>
