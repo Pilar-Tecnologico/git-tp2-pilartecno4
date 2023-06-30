@@ -18,17 +18,18 @@
   <section class="section">
     <div class="container">
       <h1 class="title">***Backlog de VideoGames***</h1>
-
       <!-- Formulario para cargar nuevos videojuegos -->
       <form id="gameForm" class="mb-4">
         <div class="field">
           <label class="label">Nombre del VideoGames</label>
-          <div class="control">
+          <div class="control">      
+      <!---Aqui esta el input de ingreso del videogame-->
             <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego" oninput="validateForm()">
           </div>
         </div>
         <div class="field">
-          <label class="label">Estado</label>
+      <!---Aqui va el estado del videogame--->
+          <label class="label">Estados</label>
           <div class="control">
             <div class="select">
               <select id="gameStatus">
@@ -43,14 +44,13 @@
           <button type="submit" class="button is-primary" id="loadButton" disabled>Cargar Videojuego</button>
         </div>
       </form>
-
       <!-- Tabla para visualizar el backlog de videojuegos -->
       <table class="table is-fullwidth is-striped is-hoverable">
         <thead>
           <tr>
             <th>Videojuego</th>
             <th>Estados</th>
-            <th>Acciones</th> <!-- Nueva columna para el botón de eliminar -->
+            <th>Acciones</th> 
           </tr>
         </thead>
         <tbody id="gameList">
@@ -89,12 +89,10 @@
     document.getElementById('gameForm').addEventListener('submit', function(event) {
       
       event.preventDefault();
-
-     
+      
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
 
-      
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
@@ -103,7 +101,6 @@
       
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
-
    
       var deleteButton = document.createElement('button');
       deleteButton.classList.add('button', 'is-danger');
@@ -117,22 +114,19 @@
 
       
       deleteCell.appendChild(deleteButton);
-
     
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
       newRow.appendChild(deleteCell);
-
-    
+   
       document.getElementById('gameList').appendChild(newRow);
-
-      
+ 
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
-
-    
+ 
       document.getElementById('loadButton').disabled = true;
     });
   </script>
 </body>
 </html>
+
