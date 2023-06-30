@@ -4,9 +4,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.0">
+  <meta name="version" content="1.1.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
-  <title>Backlog de Videojuegos</title>
+  <title>
+    Backlog de VideoGames
+  </title>
   <style>
     .is-hidden { display: none; }
   </style>
@@ -15,14 +17,14 @@
 <body>
   <section class="section">
     <div class="container">
-      <h1 class="title">Backlog de Videojuegos</h1>
+      <h1 class="title">***Backlog de VideoGames***</h1>
 
       <!-- Formulario para cargar nuevos videojuegos -->
       <form id="gameForm" class="mb-4">
         <div class="field">
-          <label class="label">Nombre del Videojuego</label>
+          <label class="label">Nombre del VideoGames</label>
           <div class="control">
-            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego">
+            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego" oninput="validateForm()">
           </div>
         </div>
         <div class="field">
@@ -38,7 +40,7 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button type="submit" class="button is-primary" id="loadButton" disabled>Cargar Videojuego</button>
         </div>
       </form>
 
@@ -47,17 +49,24 @@
         <thead>
           <tr>
             <th>Videojuego</th>
-            <th>Estado</th>
+            <th>Estados</th>
+            <th>Acciones</th> <!-- Nueva columna para el botón de eliminar -->
           </tr>
         </thead>
         <tbody id="gameList">
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td>
+              <button class="button is-danger" onclick="deleteGame(this)">x</button>
+            </td>
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td>
+              <button class="button is-danger" onclick="deleteGame(this)">x</button>
+            </td>
           </tr>
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
@@ -66,33 +75,64 @@
   </section>
 
   <script>
+    function validateForm() {
+      var gameNameInput = document.getElementById('gameName');
+      var loadButton = document.getElementById('loadButton');
+
+      if (gameNameInput.value.trim() === '') {
+        loadButton.disabled = true;
+      } else {
+        loadButton.disabled = false;
+      }
+    }
+
     document.getElementById('gameForm').addEventListener('submit', function(event) {
-      // Prevenir el comportamiento predeterminado del formulario
+      
       event.preventDefault();
-    
-      // Obtener los valores del formulario
+
+     
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
-    
-      // Crear una nueva fila y celdas
+
+      
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
-    
-      // Asignar los valores del formulario a las celdas
+      var deleteCell = document.createElement('td'); 
+
+      
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
+
+   
+      var deleteButton = document.createElement('button');
+      deleteButton.classList.add('button', 'is-danger');
+      deleteButton.textContent = 'x';
+
+   
+      deleteButton.addEventListener('click', function() {
+        var row = this.closest('tr'); 
+        row.remove(); 
+      });
+
+      
+      deleteCell.appendChild(deleteButton);
+
     
-      // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
+      newRow.appendChild(deleteCell);
+
     
-      // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
-    
-      // Limpiar el formulario
+
+      
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
-    });
-    </script>
+
     
+      document.getElementById('loadButton').disabled = true;
+    });
+  </script>
+</body>
+</html>
