@@ -37,8 +37,7 @@ body {
 
 /* Estilos para los elementos de formulario */
 
-.input,
-.select select {
+.input {
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;

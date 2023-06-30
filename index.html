@@ -4,9 +4,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.0">
+  <meta name="version" content="1.0.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
-  <title>Backlog de Videojuegos</title>
+  <title>Backlog de Video_Games</title>
   <style>
     .is-hidden { display: none; }
   </style>
@@ -15,18 +15,24 @@
 <body>
   <section class="section">
     <div class="container">
-      <h1 class="title">Backlog de Videojuegos</h1>
+      <h1 class="title">
+       ***Backlog de VideoGames***
+      </h1>
 
       <!-- Formulario para cargar nuevos videojuegos -->
       <form id="gameForm" class="mb-4">
         <div class="field">
-          <label class="label">Nombre del Videojuego</label>
+          <label class="label">
+            Nombre del Video_Games
+          </label>
           <div class="control">
-            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego">
+      <!---Aqui esta el input de ingreso del videogame-->
+            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego"oninput="validateForm()">
           </div>
         </div>
         <div class="field">
-          <label class="label">Estado</label>
+      <!---Aqui va el estado del videogame--->
+          <label class="label">Estados</label>
           <div class="control">
             <div class="select">
               <select id="gameStatus">
@@ -38,7 +44,8 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+        <!---Aqui vemos el Boton de carga del Video_Juego--->  
+          <button type="submit" class="button is-primary" id="loadButton" disabled>Cargar Videojuego</button>
         </div>
       </form>
 
@@ -46,8 +53,8 @@
       <table class="table is-fullwidth is-striped is-hoverable">
         <thead>
           <tr>
-            <th>Videojuego</th>
-            <th>Estado</th>
+            <th>VideojGames</th>
+            <th>Estados</th>
           </tr>
         </thead>
         <tbody id="gameList">
@@ -66,6 +73,16 @@
   </section>
 
   <script>
+    function validateForm() {
+      var gameNameInput = document.getElementById('gameName');
+      var loadButton = document.getElementById('loadButton');
+
+      if (gameNameInput.value.trim() === '') {
+        loadButton.disabled = true;
+      } else {
+        loadButton.disabled = false;
+      }
+    }
     document.getElementById('gameForm').addEventListener('submit', function(event) {
       // Prevenir el comportamiento predeterminado del formulario
       event.preventDefault();
@@ -93,6 +110,10 @@
       // Limpiar el formulario
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
+      
+      // Volver a deshabilitar el botón de carga
+      document.getElementById('loadButton').disable = true;
+
     });
     </script>
     
