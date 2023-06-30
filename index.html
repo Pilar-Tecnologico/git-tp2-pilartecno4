@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.1">
+  <meta name="version" content="1.1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -66,15 +66,14 @@
   </section>
 
   <script>
-    
-    //Validacion del formulario de carga
-    
     document.getElementById('gameForm').addEventListener('submit', function(event) {
       event.preventDefault();
     
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
     
+      // Validación
+      
       if (gameName.trim() === '') {
         alert('Por favor, ingrese el nombre del videojuego.');
         return;
@@ -89,6 +88,19 @@
     
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
+      
+      // Botón eliminar
+
+      var deleteButton = document.createElement('button');
+      deleteButton.textContent = 'X';
+      deleteButton.classList.add('button', 'is-danger', 'is-small');
+      deleteButton.addEventListener('click', function() {
+        newRow.remove();
+      });
+  
+      var actionsCell = document.createElement('td');
+      actionsCell.appendChild(deleteButton);
+      newRow.appendChild(actionsCell);
     
       document.getElementById('gameList').appendChild(newRow);
     
@@ -96,4 +108,3 @@
       document.getElementById('gameStatus').value = 'Planeo jugar';
     });
   </script>
-    
