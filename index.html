@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.0">
+  <meta name="version" content="1.0.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button  id="cargarJuego" type="submit" class="button is-primary" disabled>Cargar Videojuego</button>
         </div>
       </form>
 
@@ -73,6 +73,16 @@
       // Obtener los valores del formulario
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
+      var buttonCargar = document.getElementById('cargarJuego').value;
+
+      gameNameInput.addEventListener('input', function() {
+  
+      if (gameNameInput.value.trim() === '') {
+        buttonCargar.disabled = true; 
+      } else {
+        buttonCargar.disabled = false; 
+      }
+      });
     
       // Crear una nueva fila y celdas
       var newRow = document.createElement('tr');
