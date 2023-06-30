@@ -22,7 +22,7 @@
         <div class="field">
           <label class="label">Nombre del Videojuego</label>
           <div class="control">
-            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego">
+            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego" minlength="1">
           </div>
         </div>
         <div class="field">
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button type="submit" class="button is-primary" id="button">Cargar Videojuego</button>
         </div>
       </form>
 
@@ -78,14 +78,27 @@
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
+      let actionsCell = document.createElement('td');
     
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
+
+      // Boton de eliminar
+      var deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Eliminar';
+      deleteButton.classList.add('eliminar');
+      deleteButton.addEventListener('click', function() {
+      eliminarFila(this);
+    });
+      // Agregado de boton
+      actionsCell.appendChild(deleteButton);
     
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
+      newRow.appendChild(actionsCell); // Agregar la celda de acciones 
+
     
       // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
@@ -94,5 +107,18 @@
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
     });
+
+      //validacion de la entrada de datos
+    let button = document.getElementById("button");
+    let input = document.getElementById("gameName");
+    input.addEventListener('input', function() {
+    button.disabled = false;
+    });
+    
+    // Eliminacion de fila
+    function eliminarFila(boton) {
+    let fila = boton.parentNode.parentNode;
+    fila.parentNode.removeChild(fila);
+  }
     </script>
     
