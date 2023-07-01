@@ -4,11 +4,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.1">
+  <meta name="version" content="1.1.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
     .is-hidden { display: none; }
+
+    .delete-button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
   </style>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -48,16 +59,19 @@
           <tr>
             <th>Videojuego</th>
             <th>Estado</th>
+            <th>Eliminar</th>
           </tr>
         </thead>
         <tbody id="gameList">
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td><button class="delete-button">X</button></td>
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td><button class="delete-button">X</button></td>
           </tr>
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
@@ -80,15 +94,28 @@
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
+      let deleteCell = document.createElement('td'); // Nueva celda para el botón de eliminar
+      let deleteButton = document.createElement('button'); // Nuevo botón de eliminar
     
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
+      deleteButton.textContent = 'X';
+      deleteButton.className = 'delete-button'; // Texto del botón de eliminar
     
+      // Agregar evento de clic al botón de eliminar
+      deleteButton.addEventListener('click', function() {
+      let rowDelete = this.parentNode.parentNode;
+      rowDelete.parentNode.removeChild(rowDelete);
+      });
+            
+
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
-    
+      deleteCell.appendChild(deleteButton); // Agregar el botón de eliminar a la celda correspondiente
+      newRow.appendChild(deleteCell);
+
       // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
     
