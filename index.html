@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.1.1">
+  <meta name="version" content="2.1.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -29,6 +29,7 @@
             <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego">
           </div>
         </div>
+        <div class="puntuacion">
         <div class="field">
           <label class="label">Estado</label>
           <div class="control">
@@ -41,6 +42,21 @@
             </div>
           </div>
         </div>
+        <div class="field">
+          <label class="label">Calificacion</label>
+          <div class="control">
+            <div class="select">
+              <select id="gamePuntuacion">
+                <option>1/5</option>
+                <option>2/5</option>
+                <option>3/5</option>
+                <option>4/5</option>
+                <option>5/5</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
         <div class="control">
           <button type="submit" disabled id="btnEnv" class="button is-primary">Cargar Videojuego</button>
         </div>
@@ -54,6 +70,7 @@
             <th>Estado</th>
             <!-- nw -->
             <th id="eliminarCentrado">Eliminar</th>
+            <th id="moverCali">Calificacion</th>
           </tr>
         </thead>
         <tbody id="gameList">
@@ -64,6 +81,9 @@
             <td class="btn-eliminar">
               <button class="remover" >X</button>
             </td>
+            <td class="califi">
+             <p>5/5</p> 
+             </td>
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
@@ -71,6 +91,9 @@
             <!-- nw -->
             <td class="btn-eliminar">
               <button class="remover">X</button>
+            </td>
+            <td class="califi">
+            <p>4/5</p>  
             </td>
           </tr>
           <!-- Aquí se agregarán más videojuegos -->
@@ -88,12 +111,16 @@
       // Obtener los valores del formulario
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
+      var gamePuntuacion = document.getElementById('gamePuntuacion').value;
 
 
       // Crear una nueva fila y celdas
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
+      var puntuacionCell = document.createElement('td');
+      puntuacionCell.classList.add('califi');
+      puntuacionCell.innerHTML = `<p>${gamePuntuacion}</p>`;
       // nw
       var DeleteCell = document.createElement('td');
       DeleteCell.classList.add('btn-eliminar');
@@ -103,6 +130,7 @@
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
+    
       // nw
       
 
@@ -110,8 +138,10 @@
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
+      
       // nw
       newRow.appendChild(DeleteCell);
+      newRow.appendChild(puntuacionCell);
 
       // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
