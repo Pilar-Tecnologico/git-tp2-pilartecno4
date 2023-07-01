@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.0">
+  <meta name="version" content="1.0.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -15,6 +15,8 @@
 <body>
   <section class="section">
     <div class="container">
+      <div style="display: none;" id="alert" class="notification"></div>
+
       <h1 class="title">Backlog de Videojuegos</h1>
 
       <!-- Formulario para cargar nuevos videojuegos -->
@@ -38,7 +40,7 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button type="submit"  id="btn" class="button is-disabled">Cargar Videojuego</button>
         </div>
       </form>
 
@@ -82,13 +84,43 @@
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
+
+
     
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
     
-      // Añadir la nueva fila a la tabla
+        // Añadir la nueva fila a la tabla
+        function crearFilaCelda() {
       document.getElementById('gameList').appendChild(newRow);
+      }
+       //Validar formulario - Primer Ticket
+     function verificarEntrada() {
+           if (gameName.length < 3) {
+
+
+            let buttonDisable = document.getElementById("btn")
+            buttonDisable.classList.add('is-disabled')
+
+            let alertElement = document.getElementById('alert')
+            alertElement.style.display = 'block'
+            alertElement.classList.add('is-warning')
+            alertElement.innerHTML = 'El campo "Nombre del Videojuego" no puede estar vacío, debe tener al menos 3 caracteres'
+
+            setTimeout(function() {
+              alertElement.style.display = 'none'
+            }, 4000)
+            
+            
+      }else{
+        let buttonDisable = document.getElementById("btn")
+            buttonDisable.classList.add('is-primary')
+        crearFilaCelda()
+      }
+    }
+    verificarEntrada()
+      
     
       // Limpiar el formulario
       document.getElementById('gameName').value = '';
