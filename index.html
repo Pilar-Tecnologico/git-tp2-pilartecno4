@@ -4,16 +4,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.0">
+  <meta name="version" content="1.1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
   <title>Backlog de Videojuegos</title>
   <style>
-    .is-hidden { display: none; }
+    .is-hidden { display: none;}
+
+    .fas.fa-times-circle.has-text-danger{
+      cursor: pointer;
+      text-align: center;
+    }
+
+    td:last-child{
+      text-align: center !important;
+    }
+
   </style>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <section class="section">
+<section class="section">
     <div class="container">
       <h1 class="title">Backlog de Videojuegos</h1>
 
@@ -22,7 +33,7 @@
         <div class="field">
           <label class="label">Nombre del Videojuego</label>
           <div class="control">
-            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego">
+            <input class="input" required type="text" id="gameName" placeholder="Ingrese nombre del videojuego">
           </div>
         </div>
         <div class="field">
@@ -38,7 +49,7 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button type="submit" disabled id="submit" class="button is-primary">Cargar Videojuego</button>
         </div>
       </form>
 
@@ -48,51 +59,58 @@
           <tr>
             <th>Videojuego</th>
             <th>Estado</th>
+              <th>Acción</th>
           </tr>
         </thead>
         <tbody id="gameList">
-          <tr>
-            <td>The Legend of Zelda: Breath of the Wild</td>
-            <td>Planeo jugar</td>
-          </tr>
-          <tr>
-            <td>Super Mario Odyssey</td>
-            <td>Jugando</td>
-          </tr>
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
       </table>
     </div>
-  </section>
+</section>
 
-  <script>
-    document.getElementById('gameForm').addEventListener('submit', function(event) {
+<script>
+    document.getElementById('gameForm').addEventListener('submit', function (event) {
       // Prevenir el comportamiento predeterminado del formulario
       event.preventDefault();
-    
+
       // Obtener los valores del formulario
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
-    
+
       // Crear una nueva fila y celdas
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
-    
+      var actionCell = document.createElement('td')
+
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
-    
+      actionCell.innerHTML = '<i class="fas fa-times-circle has-text-danger"></i>';
+
+      actionCell.addEventListener('click', function () {
+          var row = this.parentNode;
+          row.parentNode.removeChild(row);
+      })
+
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
-    
+      newRow.appendChild(actionCell);
+
       // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
-    
+
       // Limpiar el formulario
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
     });
+
+    document.getElementById('gameName').addEventListener('input', function(event) {
+      const isSubmitEnabled = (event.target.value.length === 0)
+      document.getElementById('submit').disabled = isSubmitEnabled;
+    })
+
     </script>
     
