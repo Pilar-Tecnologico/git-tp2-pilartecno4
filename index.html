@@ -4,11 +4,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.0">
+  <meta name="version" content="1.1.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
     .is-hidden { display: none; }
+   
   </style>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -22,7 +23,7 @@
         <div class="field">
           <label class="label">Nombre del Videojuego</label>
           <div class="control">
-            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego">
+            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego" required oninput="validarFormulario()">
           </div>
         </div>
         <div class="field">
@@ -38,7 +39,7 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button type="submit" class="button is-primary" disabled id="enviar">Cargar Videojuego</button>
         </div>
       </form>
 
@@ -48,16 +49,19 @@
           <tr>
             <th>Videojuego</th>
             <th>Estado</th>
+            <th>Accion</th>
           </tr>
         </thead>
         <tbody id="gameList">
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td><button onclick="eliminar(this)" >X</button></td>
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td><button onclick="eliminar(this)" >X</button></td>
           </tr>
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
@@ -66,10 +70,11 @@
   </section>
 
   <script>
+    
     document.getElementById('gameForm').addEventListener('submit', function(event) {
       // Prevenir el comportamiento predeterminado del formulario
       event.preventDefault();
-    
+      
       // Obtener los valores del formulario
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
@@ -78,7 +83,18 @@
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
-    
+      var actionCell = document.createElement('td');
+      var deleteButton = document.createElement('button');
+      deleteButton.textContent = 'X';
+      
+      deleteButton.addEventListener('click', function() {
+        // Get the parent row and remove it from the table
+        var row = this.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+      });
+      
+      
+          
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
@@ -86,6 +102,9 @@
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
+      actionCell.appendChild(deleteButton);
+      newRow.appendChild(actionCell);
+    
     
       // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
@@ -94,5 +113,25 @@
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
     });
+    
+    function validarFormulario() {
+            // valor del campo nombre video juego
+            var datoname = document.getElementById('gameName').value;
+            var boton = document.getElementById("enviar");
+            
+            // Habilitamos el botón si ambos campos contienen texto
+            if (datoname.trim() !== '') {
+                document.getElementById('enviar').disabled = false;
+                
+                boton.style.backgroundColor ="rgb(153, 102, 153)"
+
+            } else {
+                document.getElementById('enviar').disabled = true;
+                boton.style.backgroundColor ="#00d1b2"
+            }
+        }
+
+       
+        
     </script>
     
