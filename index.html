@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.1.1">
+  <meta name="version" content="2.1.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -43,7 +43,7 @@
               <select id="gameStatus">
                 <option>Planeo jugar</option>
                 <option>Jugando</option>
-                <option>Completado</option>
+                <option value="completado">Completado</option>
               </select>
             </div>
           </div>
@@ -60,6 +60,7 @@
             <th>Videojuego</th>
             <th>Estado</th>
             <th>Eliminar</th>
+            <th>Puntuación</th>
           </tr>
         </thead>
         <tbody id="gameList">
@@ -96,7 +97,9 @@
       var statusCell = document.createElement('td');
       let deleteCell = document.createElement('td'); // Nueva celda para el botón de eliminar
       let deleteButton = document.createElement('button'); // Nuevo botón de eliminar
-    
+      let scoreCell = document.createElement('td');
+      let scoreSelect = document.createElement('select');
+
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
@@ -108,13 +111,24 @@
       let rowDelete = this.parentNode.parentNode;
       rowDelete.parentNode.removeChild(rowDelete);
       });
-            
+
+      if (gameStatus === 'completado') {
+      scoreSelect.innerHTML = `
+      <option value="Malo">Malo</option>
+      <option value="Bueno">Bueno</option>
+      <option value="Excelente">Excelente</option>
+      `;
+        scoreCell.appendChild(scoreSelect);
+      } else {
+          scoreCell.textContent = '¡Completa el juego y luego puntúalo!';
+      }
 
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
       deleteCell.appendChild(deleteButton); // Agregar el botón de eliminar a la celda correspondiente
       newRow.appendChild(deleteCell);
+      newRow.appendChild(scoreCell);
 
       // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
