@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.1">
+  <meta name="version" content="1.1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -86,14 +86,27 @@
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
-    
+      let actionsCell = document.createElement('td');
+
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
+
+      //Crear boton de eliminar 
+      let deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Eliminar';
+      deleteButton.classList.add('eliminar');
+      deleteButton.addEventListener('click', function() {
+      eliminarFila(this);
+    });
+
+     // Agrega el botón de eliminar a la celda de acciones
+     actionsCell.appendChild(deleteButton);
     
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
+      newRow.appendChild(actionsCell);
     
       // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
@@ -102,5 +115,9 @@
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
     });
+    function eliminarFila(boton) {
+    var fila = boton.parentNode.parentNode;
+    fila.parentNode.removeChild(fila);
+    }
     </script>
     
