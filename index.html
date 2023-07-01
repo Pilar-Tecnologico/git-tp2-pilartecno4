@@ -4,21 +4,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.0">
+  <meta name="version" content="1.1.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
+  
   <style>
     .is-hidden { display: none; }
   </style>
   <link rel="stylesheet" href="style.css">
+  <script>
+    function noEliminar() {
+      
+      let alertElement2 = document.getElementById('btnDemo')
+            alertElement2.style.display = 'block'
+            alertElement2.classList.add('is-warning')
+            alertElement2.innerHTML = 'Este item no se puede eliminar'
+
+            setTimeout(function() {
+              alertElement2.style.display = 'none'
+            }, 4000)
+    }
+    
+  </script>
 </head>
 <body>
   <section class="section">
     <div class="container">
+      <div style="display: none;" id="alert" class="notification"></div>
+      <div style="display: none;" id="btnDemo" class="notification"></div>
+
       <h1 class="title">Backlog de Videojuegos</h1>
 
       <!-- Formulario para cargar nuevos videojuegos -->
       <form id="gameForm" class="mb-4">
+
         <div class="field">
           <label class="label">Nombre del Videojuego</label>
           <div class="control">
@@ -38,29 +57,34 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button type="submit" id="btn" class="button is-disabled">Cargar Videojuego</button>
         </div>
       </form>
 
       <!-- Tabla para visualizar el backlog de videojuegos -->
       <table class="table is-fullwidth is-striped is-hoverable">
         <thead>
-          <tr>
+          <tr style="text-align: center;">
             <th>Videojuego</th>
             <th>Estado</th>
+            <th>Eliminar</th>
           </tr>
         </thead>
         <tbody id="gameList">
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td style="text-align: center;" ><button  onclick="noEliminar()" style="background-color: red; color: aliceblue;" >X</button></td>
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td style="text-align: center;"><button  onclick="noEliminar()" style="background-color: red; color: aliceblue;" >X</button></td>
           </tr>
+          
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
+       
       </table>
     </div>
   </section>
@@ -73,22 +97,70 @@
       // Obtener los valores del formulario
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
+
+      
     
-      // Crear una nueva fila y celdas
+       // Crear una nueva fila y celdas
+     
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
+      var deleteCell = document.createElement('td');
     
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
+
+      deleteCell.style.textAlign = 'center'
+
+      //Creamos el boton para eliminar - Segundo Ticket
+      let deleteButton = document.createElement('button')
+      deleteButton.style.backgroundColor = 'red'
+      deleteButton.style.color = '#fff'
+      deleteButton.textContent = 'X'
+      deleteButton.onclick =  function eliminarCeldas() {
+      newRow.removeChild(nameCell);
+      newRow.removeChild(statusCell);
+      newRow.removeChild(deleteCell)
+    }
+      deleteCell.appendChild(deleteButton)
     
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
+      newRow.appendChild(deleteCell)
     
+
       // Añadir la nueva fila a la tabla
+      function crearFilaCelda() {
       document.getElementById('gameList').appendChild(newRow);
+      }
+      //Validar formulario - Primer Ticket
+     function verificarEntrada() {
+           if (gameName.length < 3) {
+
+
+            let buttonDisable = document.getElementById("btn")
+            buttonDisable.classList.add('is-disabled')
+
+            let alertElement = document.getElementById('alert')
+            alertElement.style.display = 'block'
+            alertElement.classList.add('is-warning')
+            alertElement.innerHTML = 'Este campo no puede estar vacío, debe tener al menos 3 caracteres'
+
+            setTimeout(function() {
+              alertElement.style.display = 'none'
+            }, 4000)
+            
+            
+      }else{
+        let buttonDisable = document.getElementById("btn")
+            buttonDisable.classList.add('is-primary')
+        crearFilaCelda()
+      }
+    }
+    verificarEntrada()
+
     
       // Limpiar el formulario
       document.getElementById('gameName').value = '';
