@@ -82,3 +82,9 @@ body {
 .table tbody tr:nth-child(even) {
   background-color: #f2f2f2;
 }
+.delete-button {
+  cursor: pointer;
+  color: red;
+  font-weight: bold;
+}
+/*este texto lo añadi en la version 1.2.0 del trabajo practico n°2
