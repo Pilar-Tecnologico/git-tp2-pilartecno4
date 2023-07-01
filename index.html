@@ -4,7 +4,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<<<<<<< Updated upstream
   <meta name="version" content="1.0.0">
+=======
+  <meta name="version" content="1.2.0">
+>>>>>>> Stashed changes
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -54,10 +58,12 @@
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td><span class="delete-button">X</span></td>
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td><span class="delete-button">X</span></td>
           </tr>
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
@@ -93,6 +99,16 @@
       // Limpiar el formulario
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
+    });
+    window.addEventListener('DOMContentLoaded', function() {
+      var tabla = document.getElementById('tabla');
+
+      tabla.addEventListener('click', function(event) {
+        if (event.target.classList.contains('delete-button')) {
+          var fila = event.target.parentNode.parentNode;
+          fila.parentNode.removeChild(fila);
+        }
+      });
     });
     </script>
     
