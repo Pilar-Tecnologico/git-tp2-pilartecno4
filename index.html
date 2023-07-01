@@ -22,7 +22,8 @@
         <div class="field">
           <label class="label">Nombre del Videojuego</label>
           <div class="control">
-            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego">
+            <input class="input" type="text" id="gameName" oninput="validaCarga()" placeholder="Ingrese nombre del videojuego">
+
           </div>
         </div>
         <div class="field">
@@ -38,7 +39,7 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button type="submit" id="boton" disabled class="button is-primary">Cargar Videojuego</button>
         </div>
       </form>
 
@@ -108,13 +109,22 @@
      //boton.addEventListener("click", eliminarRegistro() );
            
       });
-    </script>
 
-<script>
-  function eliminarRegistro(boton) {
-    var fila = boton.parentNode.parentNode; // Obtener la fila a eliminar
-    fila.parentNode.removeChild(fila); // Eliminar la fila de la tabla
-  }
+      function validaCarga(){
+          var juego = document.getElementById("gameName");
+          var boton = document.getElementById("boton");
+          
+          if (juego.value !== "") {
+            boton.disabled = false;
+          } else {
+            boton.disabled = true;
+          }
+        }
+   
+      function eliminarRegistro(boton) {
+        var fila = boton.parentNode.parentNode; // Obtener la fila a eliminar
+        fila.parentNode.removeChild(fila); // Eliminar la fila de la tabla
+      }
 </script>
 
     
