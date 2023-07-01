@@ -82,3 +82,19 @@ body {
 .table tbody tr:nth-child(even) {
   background-color: #f2f2f2;
 }
+.btn-eliminar{
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.btn-eliminar button{
+  background-color: red;
+  color: rgb(255, 255, 255);
+  border-radius: 20px;
+  text-align: center;
+  border: none;
+  
+}
+#eliminarCentrado{
+  text-align: center;
+}
