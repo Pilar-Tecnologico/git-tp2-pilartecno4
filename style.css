@@ -98,3 +98,14 @@ align-items: center;
 #eliminarCentrado{
   text-align: center;
 }
+.puntuacion{
+  display: flex;
+ 
+}
+.califi p{
+  text-align: center;
+
+}
+#moverCali{
+text-align: center;
+}
