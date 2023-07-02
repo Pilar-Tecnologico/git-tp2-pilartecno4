@@ -18,7 +18,7 @@
       <h1 class="title">Backlog de Videojuegos</h1>
 
       <!-- Formulario para cargar nuevos videojuegos -->
-      <form id="gameForm" class="mb-4">
+      <form id="gameForm" class="mb-3">
         <div class="field">
           <label class="label">Nombre del Videojuego</label>
           <div class="control">
@@ -34,14 +34,26 @@
                 <option>Jugando</option>
                 <option>Completado</option>
               </select>
+              <div class="field">
+                <label class="label">Clasificación</label>
+                <h2>calificar solo cuando haya completado el juego</h2>
+                <div class="control">
+                  <div class="select">
+                    <select id="gameRating">
+                      <option value="1">1 estrella</option>
+                      <option value="2">2 estrellas</option>
+                      <option value="3">3 estrellas</option>
+                      <option value="4">4 estrellas</option>
+                      <option value="5">5 estrellas</option>
+                    </select>
             </div>
           </div>
         </div>
+        
         <div class="control">
           <button type="submit" class="button is-primary">Cargar Videojuego</button>
         </div>
       </form>
-
       <!-- Tabla para visualizar el backlog de videojuegos -->
       <table class="table is-fullwidth is-striped is-hoverable">
         <thead>
@@ -54,10 +66,13 @@
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td><button class="button is-danger is-small">Eliminar</button></td>
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td><button class="button is-danger is-small">Eliminar</button></td>
+
           </tr>
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
@@ -68,31 +83,77 @@
   <script>
     document.getElementById('gameForm').addEventListener('submit', function(event) {
       // Prevenir el comportamiento predeterminado del formulario
+     // Obtener el valor del campo de nombre
+    var gameName = document.getElementById('gameName').value;
+    var gameStatus = document.getElementById('gameStatus').value;
+      // Verifica que el campo de nombre no esté vacío
+      if (gameName.trim() === '') {
+        alert('El campo de nombre no puede estar vacío');
+        return;
+      }
+
       event.preventDefault();
     
       // Obtener los valores del formulario
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
+      var gameRating = document.getElementById('gameRating').value;
     
       // Crear una nueva fila y celdas
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
-    
+      var ratingCell = document.createElement('td');
+      var actionsCell = document.createElement('td');
+      var deleteButton = document.createElement('button');
+
+      
+      
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
+      ratingCell.textContent = gameRating + ' estrellas';
+      deleteButton.textContent = 'Eliminar';
+
+     
     
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
+      newRow.appendChild(ratingCell);
+      newRow.appendChild(actionsCell);
+      newRow.appendChild(deleteButton);
     
       // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
+
+
+      // Configurar el botón de eliminar
+      deleteButton.className = 'button is-danger is-small';
+      deleteButton.textContent = 'Eliminar';
+
+
+      
+      // click al botón de eliminar
+      deleteButton.addEventListener('click', function() {
+        // Elimina la fila correspondiente al botón presionado
+        var row = this.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+      });
     
       // Limpiar el formulario
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
+
+       
     });
+    var deleteButtons = document.querySelectorAll('#gameList .button.is-danger');
+    deleteButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        var row = this.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+      });
+    });
+    
     </script>
     
