@@ -82,3 +82,17 @@ body {
 .table tbody tr:nth-child(even) {
   background-color: #f2f2f2;
 }
+
+.deletGame{
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: #b71010;
+  color: white;
+  cursor: pointer;
+}
+
+.deletGame:hover{
+  background-color: #a50808;
+}
