@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.1">
+  <meta name="version" content="1.1.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
@@ -52,12 +52,22 @@
           <tr>
             <th>Videojuego</th>
             <th>Estado</th>
+            <th>Clasificación</th>
           </tr>
         </thead>
         <tbody id="gameList">
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td class="rating">
+              <select class="rating-select">
+                <option value="1">★</option>
+                <option value="2">★★</option>
+                <option value="3">★★★</option>
+                <option value="4">★★★★</option>
+                <option value="5">★★★★★</option>
+              </select>
+            </td>
             <td class="caja"><button class="btn-del"><i class="fa-solid fa-xmark"></i></button>
             </td>
           </tr>
@@ -85,6 +95,15 @@
       });
     }
     agregarBotonEliminar();
+
+    var clasificaciones = document.querySelectorAll('.rating');
+  clasificaciones.forEach(function (clasificacion) {
+    // Obtener la clasificación del elemento actual
+    var valorClasificacion = clasificacion.textContent;
+    
+    // Actualizar el contenido con la clasificación
+    clasificacion.textContent = valorClasificacion + ' estrellas';
+  });
 
     document.getElementById('gameForm').addEventListener('submit', function (event) {
       // Prevenir el comportamiento predeterminado del formulario
