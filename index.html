@@ -74,25 +74,43 @@
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
     
-      // Crear una nueva fila y celdas
+      // Crear una nuevas filas y celdas
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
-    
+      var deleteCell = document.createElement('td');
+      var deleteButton = document.createElement('button');
+
+      // botón de eliminar
+      deleteButton.classList.add('deletGame');
+      deleteButton.textContent = 'X';
+
+      deleteButton.addEventListener('click', function() {
+        var row = deleteButton.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+      });
+
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
-    
-      // Añadir las celdas a la nueva fila
+
+      // Añadir las celdas y el botón de eliminar a la nueva fila
+      deleteCell.appendChild(deleteButton);
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
-    
+      newRow.appendChild(deleteCell);
+
       // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
-    
-      // Limpiar el formulario
-      document.getElementById('gameName').value = '';
-      document.getElementById('gameStatus').value = 'Planeo jugar';
     });
-    </script>
-    
+    // ticket #2
+    const deleteButtons = document.querySelectorAll('.deletGame');
+    deleteButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        const row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+      });
+    });
+  </script>
+</body>
+</html>
