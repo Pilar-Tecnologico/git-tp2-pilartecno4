@@ -18,7 +18,7 @@
       <h1 class="title">Backlog de Videojuegos</h1>
 
       <!-- Formulario para cargar nuevos videojuegos -->
-      <form id="gameForm" class="mb-4">
+      <form id="gameForm" class="mb-3">
         <div class="field">
           <label class="label">Nombre del Videojuego</label>
           <div class="control">
@@ -34,14 +34,26 @@
                 <option>Jugando</option>
                 <option>Completado</option>
               </select>
+              <div class="field">
+                <label class="label">Clasificación</label>
+                <h2>calificar solo cuando haya completado el juego</h2>
+                <div class="control">
+                  <div class="select">
+                    <select id="gameRating">
+                      <option value="1">1 estrella</option>
+                      <option value="2">2 estrellas</option>
+                      <option value="3">3 estrellas</option>
+                      <option value="4">4 estrellas</option>
+                      <option value="5">5 estrellas</option>
+                    </select>
             </div>
           </div>
         </div>
+        
         <div class="control">
           <button type="submit" class="button is-primary">Cargar Videojuego</button>
         </div>
       </form>
-
       <!-- Tabla para visualizar el backlog de videojuegos -->
       <table class="table is-fullwidth is-striped is-hoverable">
         <thead>
@@ -60,6 +72,7 @@
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
             <td><button class="button is-danger is-small">Eliminar</button></td>
+
           </tr>
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
@@ -84,22 +97,31 @@
       // Obtener los valores del formulario
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
+      var gameRating = document.getElementById('gameRating').value;
     
       // Crear una nueva fila y celdas
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
+      var ratingCell = document.createElement('td');
+      var actionsCell = document.createElement('td');
       var deleteButton = document.createElement('button');
+
       
       
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
+      ratingCell.textContent = gameRating + ' estrellas';
+      deleteButton.textContent = 'Eliminar';
+
      
     
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
+      newRow.appendChild(ratingCell);
+      newRow.appendChild(actionsCell);
       newRow.appendChild(deleteButton);
     
       // Añadir la nueva fila a la tabla
@@ -109,6 +131,7 @@
       // Configurar el botón de eliminar
       deleteButton.className = 'button is-danger is-small';
       deleteButton.textContent = 'Eliminar';
+
 
       
       // click al botón de eliminar
