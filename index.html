@@ -48,16 +48,23 @@
           <tr>
             <th>Videojuego</th>
             <th>Estado</th>
+            <th>Eliminar</th>
           </tr>
         </thead>
         <tbody id="gameList">
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td>
+              <button class="eliminar-btn" onclick="deleteGame(this)">X</button>
+            </td>
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td>
+              <button class="eliminar-btn" onclick="deleteGame(this)">X</button>
+            </td>
           </tr>
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
@@ -74,18 +81,33 @@
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
 
+
      // Crear una nueva fila y celdas
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
+
+      var dropCell = document.createElement('td');
+      var dropBtn = document.createElement('button');
+
+      
     
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
+      
+      dropBtn.className= "eliminar-btn";
+      dropBtn.textContent="X";
+      dropBtn.onclick = function () { 
+        deleteGame(this);
+      };
+
     
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
+      dropCell.appendChild(dropBtn);
+      newRow.appendChild(dropCell);
     
       // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
@@ -93,7 +115,13 @@
       // Limpiar el formulario
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
-    });
+      
+    })
+
+    function deleteGame(button) {
+        var row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+      };
 
     function validateForm() {
         var name = document.getElementById("gameName").value;
@@ -104,6 +132,6 @@
         } else {
           buttonCargar.disabled = true;
         }
-      }
+      };
     </script> 
     
