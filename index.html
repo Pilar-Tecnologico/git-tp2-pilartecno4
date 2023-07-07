@@ -22,7 +22,8 @@
         <div class="field">
           <label class="label">Nombre del Videojuego</label>
           <div class="control">
-            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego">
+            <input class="input" type="text" id="gameName" placeholder="Ingrese nombre del videojuego" >
+            <p id="alerta" class="display-none">Debe ingresar el nombre de un video juego</p>
           </div>
         </div>
         <div class="field">
@@ -38,7 +39,7 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary">Cargar Videojuego</button>
+          <button id="submitButton" type="submit" class="button is-primary">Cargar Videojuego</button>
         </div>
       </form>
 
@@ -72,6 +73,23 @@
     
       // Obtener los valores del formulario
       var gameName = document.getElementById('gameName').value;
+      
+      //Obtengo la alerta
+      let alerta = document.getElementById('alerta')
+      
+      //Validacion del form
+      let submitButton = document.getElementById('submitButton')
+      
+      if (gameName=="") {  
+        alerta.classList.remove('display-none')
+        setTimeout(function(){
+          alerta.classList.add('display-none')
+        },4500)
+        submitButton.disable=true
+        return
+      }
+
+
       var gameStatus = document.getElementById('gameStatus').value;
     
       // Crear una nueva fila y celdas

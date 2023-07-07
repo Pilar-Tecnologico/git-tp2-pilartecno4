@@ -52,7 +52,7 @@ body {
   padding: 10px;
   border: none;
   background-color: #10B981;
-  color: white;
+  color: white; 
   cursor: pointer;
 }
 
@@ -81,4 +81,16 @@ body {
 
 .table tbody tr:nth-child(even) {
   background-color: #f2f2f2;
+}
+
+
+/* -------Herramientas para trabajar el front */
+
+
+.display-none{
+  display: none;
+}
+
+#alerta{
+  color: red;
 }
