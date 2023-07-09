@@ -60,6 +60,11 @@ body {
   background-color: #047857;
 }
 
+.is-danger {
+  font-weight: bold;
+  width: auto;
+}
+
 /* Estilos de la tabla */
 
 .table {
