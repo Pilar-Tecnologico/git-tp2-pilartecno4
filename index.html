@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="version" content="1.0.0">
+  <meta name="version" content="1.1.1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
   <title>Backlog de Videojuegos</title>
   <style>
-    .is-hidden { display: none; }
+    .is-hidden {
+      display: none;
+    }
   </style>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <section class="section">
     <div class="container">
@@ -48,17 +52,32 @@
           <tr>
             <th>Videojuego</th>
             <th>Estado</th>
+            <th>Clasificación</th>
           </tr>
         </thead>
         <tbody id="gameList">
           <tr>
             <td>The Legend of Zelda: Breath of the Wild</td>
             <td>Planeo jugar</td>
+            <td class="rating">
+              <select class="rating-select">
+                <option value="1">★</option>
+                <option value="2">★★</option>
+                <option value="3">★★★</option>
+                <option value="4">★★★★</option>
+                <option value="5">★★★★★</option>
+              </select>
+            </td>
+            <td class="caja"><button class="btn-del"><i class="fa-solid fa-xmark"></i></button>
+            </td>
           </tr>
           <tr>
             <td>Super Mario Odyssey</td>
             <td>Jugando</td>
+            <td class="caja"><button class="btn-del"><i class="fa-solid fa-xmark"></i></button>
+            </td>
           </tr>
+
           <!-- Aquí se agregarán más videojuegos -->
         </tbody>
       </table>
@@ -66,33 +85,68 @@
   </section>
 
   <script>
-    document.getElementById('gameForm').addEventListener('submit', function(event) {
+    function agregarBotonEliminar() {
+      var botonesEliminar = document.querySelectorAll('.btn-del');
+      botonesEliminar.forEach(function (boton) {
+        boton.addEventListener('click', function () {
+          var fila = boton.parentNode.parentNode;
+          fila.remove();
+        });
+      });
+    }
+    agregarBotonEliminar();
+
+    var clasificaciones = document.querySelectorAll('.rating');
+  clasificaciones.forEach(function (clasificacion) {
+    // Obtener la clasificación del elemento actual
+    var valorClasificacion = clasificacion.textContent;
+    
+    // Actualizar el contenido con la clasificación
+    clasificacion.textContent = valorClasificacion + ' estrellas';
+  });
+
+    document.getElementById('gameForm').addEventListener('submit', function (event) {
       // Prevenir el comportamiento predeterminado del formulario
       event.preventDefault();
-    
+      if (document.getElementById('gameName').value == 0) {
+        event.preventDefault() = false;
+      }
       // Obtener los valores del formulario
       var gameName = document.getElementById('gameName').value;
       var gameStatus = document.getElementById('gameStatus').value;
-    
+
       // Crear una nueva fila y celdas
       var newRow = document.createElement('tr');
       var nameCell = document.createElement('td');
       var statusCell = document.createElement('td');
-    
+      var deleteCell = document.createElement('td');
+      var deleteButton = document.createElement('button');
+      var deleteIcon = document.createElement('i');
+
       // Asignar los valores del formulario a las celdas
       nameCell.textContent = gameName;
       statusCell.textContent = gameStatus;
-    
+
+      deleteIcon.className = 'fa-solid fa-xmark';
+      deleteButton.className = 'btn-del';
+      deleteButton.appendChild(deleteIcon);
+      deleteCell.appendChild(deleteButton);
+
       // Añadir las celdas a la nueva fila
       newRow.appendChild(nameCell);
       newRow.appendChild(statusCell);
-    
+      newRow.appendChild(deleteCell);
+
       // Añadir la nueva fila a la tabla
       document.getElementById('gameList').appendChild(newRow);
-    
+
       // Limpiar el formulario
       document.getElementById('gameName').value = '';
       document.getElementById('gameStatus').value = 'Planeo jugar';
+
+      agregarBotonEliminar();
     });
-    </script>
-    
+
+
+  </script>
+  <script src="https://kit.fontawesome.com/4bf271c494.js" crossorigin="anonymous"></script>
