@@ -79,6 +79,21 @@ body {
 }
 
 
+
 .table tbody tr:nth-child(even) {
   background-color: #f2f2f2;
+}
+.caja {
+  background-color: transparent;
+  width: 40px;
+ }
+.fa-solid {
+  color: white;
+  font-size: 1.8em;
+}
+.btn-del {
+  background-color: red;
+  border: none;
+  cursor: pointer;
+  
 }
